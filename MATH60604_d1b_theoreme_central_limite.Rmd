@@ -60,13 +60,13 @@ xaringanExtra::use_extra_styles(
 
 # Loi nulle 
 
-Lorsqu'on effectue un test statistique, on doit connaître la loi nulle afin de tirer une conclusion (rejeter ou ne pas rejeter $\mathscr{H}_0$)
+Lorsqu'on effectue un test statistique, on doit connaître son comportement sous l'hypothèse nulle afin de tirer une conclusion (rejeter ou ne pas rejeter $\mathscr{H}_0$)
 
 La statistique de test est souvent 
-- une moyenne
-- un paramètre estimé par maximum de vraisemblance
+- une statistique de Wald (test-_t_, estimateur du maximum de vraisemblance)
+- racine du test du rapport de vraisemblance 
 
-Dans ces cas, sous des hypothèses de régularité, la loi nulle est normale. Pourquoi?
+Dans ces cas, sous des hypothèses de régularité et pour $n$ suffisamment grand, la loi nulle qui sert de référence est approximativement normale. Pourquoi?
 
 ---
 
@@ -160,7 +160,7 @@ Distribution empirique et approximation normale de la moyenne de $n=10$ observat
 ]
 ---
 
-La qualité de l'approximation fournie par le théorème central limite dépend de la taille $n$, mais s'améliore quand la taille de l'échantillon augmente.
+L'approximation fournie par le théorème central limite est meilleure quand la taille de l'échantillon $n$ augmente.
 
 ```{r fig.align="center", echo=FALSE,  out.width="60%"}
 knitr::include_graphics("img/CLT/densmean100.png")

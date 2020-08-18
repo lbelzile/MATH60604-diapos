@@ -11,7 +11,7 @@
     <script src="libs/tile-view/tile-view.js"></script>
     <link href="libs/panelset/panelset.css" rel="stylesheet" />
     <script src="libs/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x2c3933e46ea4aa58f83fad1fb73b2ef","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x49500c988984415ae11742937804952","expires":14}</script>
     <script src="libs/himalaya/himalaya.js"></script>
     <script src="libs/js-cookie/js.cookie.js"></script>
     <link href="libs/editable/editable.css" rel="stylesheet" />
@@ -60,19 +60,22 @@ layout: true
 
 # Tests d'hypothèse
 
-Analogie du procès
+.center[**Analogie du procès**]
 
 &lt;img src="img/tests/01-intro-12_Angry_Men_scene.jpg" width="65%" style="display: block; margin: auto;" /&gt;
 .figcaption[Capture d'écran du drame judiciaire _Douze hommes en colère_ (1957)]
 
 ---
 
-### Étapes de la démarche
+### Recette
 
+Un test d'hypothèse est une règle de décision binaire.
 
+Voici les étapes de la démarche.
 
+--
 1. Définir les variables d'intérêt
-2. Formuler les hypothèses alternatives et nulles, `\(\mathscr{H}_1\)` et `\(\mathscr{H}_0\)`
+2. Formuler les hypothèses alternatives et nulles, `\(\mathscr{H}_a\)` et `\(\mathscr{H}_0\)`
 3. Choisir la statistique de test
 4. Comparer la valeur numérique obtenue à la loi nulle
 5. Obtenir une valeur-*p*
@@ -124,7 +127,6 @@ secondes) que prend une personne pour apercevoir cet obstacle (mesuré à l'aide
 
 ### \#1. Définir les variables d'intérêt
 
-Définissons
 - `\(\mu_{\texttt{c}}\)`: moyenne du temps de réaction (en secondes) lors d'un appel (`c`)
 - `\(\mu_{\texttt{t}}\)`: moyenne du temps de réaction (en secondes) lorsqu'on texte (`t`)
 
@@ -133,11 +135,14 @@ Définissons
 ### \#2. Formuler les hypothèses alternatives et nulles
 
 - Hypothèse d'intérêt: est-ce que texter est plus distrayant?
-    - `\(\mathscr{H}_1: \mu_{\texttt{t}} &gt; \mu_{\texttt{c}}\)` (unilatéral)
+    - `\(\mathscr{H}_a: \mu_{\texttt{t}} &gt; \mu_{\texttt{c}}\)` (unilatéral)
 - Hypothèse nulle (avocat du Diable)
     - `\(\mathscr{H}_0: \mu_{\texttt{t}} \leq  \mu_{\texttt{c}}\)`
 
-On exprime l'hypothèse en fonction de la différence: `\(\mathscr{H}_1: \mu_{\texttt{t}} - \mu_{\texttt{c}}&gt;0\)`.
+On exprime l'hypothèse en fonction de la différence: 
+`\begin{align*}
+\mathscr{H}_a: \mu_{\texttt{t}} - \mu_{\texttt{c}}&gt;0.
+\end{align*}`
 
 ---
 
@@ -149,7 +154,7 @@ On s'intéresse à la différence de temps de réaction (moyenne)
 `\begin{align*}
 T_D=\frac{\overline{D}-\mu_0}{\mathsf{se}(\overline{D})}
 \end{align*}`
-- `\(\overline{D}\)` est la moyenne dans l'échantillon des différences `\(D_i\)` de temps de réaction entre texter et marcher pour chaque sujet `\(i\)`. 
+- `\(\overline{D}\)` est la différence des temps moyens de réaction.
 - On postule `\(\mu_0=\mu_{\texttt{t}}-\mu_{\texttt{c}}=0\)`.
 - L'erreur-type de `\(\overline{D}\)` est `\(\mathsf{se}(\overline{D})=S_D/\sqrt{n}\)`, où `\(S_D\)` est l'écart-type des variables `\(D_i\)` et `\(n\)` est la taille de l'échantillon.
 
@@ -158,25 +163,35 @@ T_D=\frac{\overline{D}-\mu_0}{\mathsf{se}(\overline{D})}
 
 .panelset[
 
-.panel[.panel-name[Sortie **SAS**]
-.pull-left[
-&lt;img src="img/tests/tests_sas_g1.png" width="100%" style="display: block; margin: auto;" /&gt;
-]
-.pull-right[
-&lt;img src="img/tests/tests_sas_g2.png" width="100%" style="display: block; margin: auto;" /&gt;
-]
 
-]
 .panel[.panel-name[Code **SAS**]
 
 
 ```sas
-proc ttest data=modstat.distraction side=l;
-paired c*t;
+proc ttest data=modstat.distraction side=u;
+paired t*c;
 run;
 ```
 
 ]
+
+.panel[.panel-name[Sortie **SAS**]
+.pull-left[
+&lt;img src="img/tests/tests_sas_g1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+&lt;img src="img/tests/tests_sas_g2.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+]
+.panel[.panel-name[Code **R**]
+
+```r
+data(distraction, package = "hecmodstat")
+with(distraction, t.test(t-c, alternative = "greater", mu = 0))
+```
+]
+
 .panel[.panel-name[Sortie **R**]
 
 
@@ -185,23 +200,13 @@ run;
 ## 	One Sample t-test
 ## 
 ## data:  t - c
-## t = 3, df = 34, p-value = 0.003
+## t = 2.907, df = 34, p-value = 0.00319
 ## alternative hypothesis: true mean is greater than 0
 ## 95 percent confidence interval:
-##  0.131   Inf
+##  0.130922      Inf
 ## sample estimates:
 ## mean of x 
-##     0.313
-```
-]
-.panel[.panel-name[Code **R**]
-
-```r
-url &lt;- "https://lbelzile.bitbucket.io/MATH60604/distraction.sas7bdat"
-distraction &lt;- haven::read_sas(url)
-with(distraction,
-     t.test(t-c, alternative = "greater", mu = 0) 
-     )
+##  0.312971
 ```
 ]
 

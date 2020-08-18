@@ -143,7 +143,7 @@ Illustration par Allison Horst de variables catégorielles nominales (gauche), o
 
 - Éléments (couches):
     - données
-    - transformation (variable -> esthétique)
+    - application (variable -> esthétique)
     - objets géométriques
     - transformations
     - positionnement
@@ -252,7 +252,7 @@ run;
 .small[Histogramme du prix des billets au tarif Promo de trains du jeu de données Renfe
 ]
 ]
-```{r renfe_hist, eval = TRUE, echo = FALSE}
+```{r renfe_hist, eval = TRUE, echo = FALSE, fig.width = 8, fig.height = 4.2}
 renfe %>% subset(tarif == "Promo") %>%
   ggplot(aes(x = prix)) + 
     geom_histogram(aes(y = ..density..), bins = 30) +
@@ -491,9 +491,9 @@ Votre graphique doit être interprétable uniquement avec la légende.
 
 ---
 
-.discussion[## Atelier]
+.discussion[]
 
-Considérons en groupe l'analyse exploratoire des données `diamants`.
+Faites une analyse exploratoire des données `diamants` en atelier.
 
 .pull-left[
 ### Questions
