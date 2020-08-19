@@ -63,7 +63,7 @@ knitr::include_graphics("img/intro/leo_belzile_photo.png")
 .midi[
 - Professeur adjoint, Sciences de la décision
 - Spécialité: modélisation d'événements rares
-- Je suis plus facilement joignable par *courriel:* [`leo.belzile@hec.ca`](mailto:leo.belzile@hec.ca)
+
 
 
 [Et vous? Faisons connaissance!](https://etherpad.wikimedia.org/p/QJxypvl4sxCRynWIDUbL)
@@ -89,7 +89,7 @@ knitr::include_graphics("img/intro/leo_belzile_photo.png")
     ]
 - Soumissions de travaux via *ZoneCours*
 - Publiez vos questions de cours sur **Piazza**: [`piazza.com/hec.ca/fall2020/math60604`](piazza.com/hec.ca/fall2020/math60604)
-
+- Pour d'autres questions, je suis joignable par *courriel:* [`leo.belzile@hec.ca`](mailto:leo.belzile@hec.ca)
 ---
 
 # Contenu du cours 
@@ -112,7 +112,7 @@ knitr::include_graphics("img/intro/leo_belzile_photo.png")
 
 # Évaluations
 
-- Trois devoirs, chacun 15%
+- Trois devoirs, chacun 15% (parties en équipes?)
     - questions courtes (choix multiples)
     - questions à développement avec programmation
     - analyse de données
@@ -228,8 +228,16 @@ Est-ce qu'il y aura de la programmation?
 *Oui*. Nous couvrirons les fonctionnalités de base de **SAS** (et **R**) pour l'ajustement des modèles et la visualisation des données. 
 ]
 
-- Le code sera fourni uniquement pour les exercices en classe et les ateliers.
-- Vous devrez remettre votre code avec vos devoirs.
+- Le code sera fourni uniquement pour les exercices et les diapos.
+
+
+Vous devrez remettre votre code avec vos devoirs/projets.
+
+- je dois pouvoir reproduire *exactement* vos analyses.
+- fichier `.txt`(sinon, *Zonecours* vous empêchera de soumettre votre travail)
+- encodage UTF-8 
+- suivez les consignes (voir instructions) pour nommer vos scripts 
+(indice: $\neq$ `moncode.sas`)
 
 
 ---
@@ -325,13 +333,9 @@ Faites-moi savoir si
 
 # Plagiat
 
-Vous devez fournir le code (et les données) afin que je puisse reproduire *exactement* vos analyses.
-.midi[
-- fichier `.txt`, encodage UTF8 (sinon, *Zonecours* vous empêchera de soumettre votre travail)
-- suivez les consignes (voir instructions) pour nommer vos scripts 
-(indice: $\neq$ `moncode.sas`)
+N'essayez pas! Les conséquences seraient fâcheuses et ce serait faire insulte à votre intelligence. Demandez de l'aide plutôt!
+
 - si vous vous inspirez de code écrit par d'autres (par ex., `StackOverflow`), citez adéquatement vos sources.
 - vous devez programmer vous-même votre code pour les travaux individuels (discussion avec vos pairs acceptée, mais tout partage de code et copier-coller est une infraction au code de conduite de l'école)
 
-]
 
