@@ -60,7 +60,7 @@ xaringanExtra::use_extra_styles(
 
 # Loi nulle 
 
-Lorsqu'on effectue un test statistique, on doit connaître son comportement sous l'hypothèse nulle afin de tirer une conclusion (rejeter ou ne pas rejeter $\mathscr{H}_0$)
+Lorsqu'on effectue un test statistique, on doit connaître son comportement sous l'hypothèse nulle afin de tirer une conclusion (rejeter/ne pas rejeter $\mathscr{H}_0$).
 
 La statistique de test est souvent 
 - une statistique de Wald (test-_t_, estimateur du maximum de vraisemblance)
@@ -197,13 +197,14 @@ Approximation normale pour différentes tailles d'échantillons.
 ]
 ---
 
-## Application
+<!-- ## Application -->
 
-La statistique du test-*t* pour un échantillon est
-\begin{align*}
-\frac{\overline{Y}_n - \mu_0}{S_n} \stackrel{\cdot}{\sim} \mathsf{St}_{n-1},
-\end{align*}
-où $S_n=(n-1)^{-1}\sum_{i=1}^n (Y_i-\overline{Y}_n)^2$ est l'estimateur sans biais de la variance. 
+<!-- La statistique du test-*t* pour un échantillon est -->
+<!-- \begin{align*} -->
+<!-- T_n= \frac{\overline{Y}_n - \mu_0}{S_n}, -->
+<!-- \end{align*} -->
+<!-- où $S_n=(n-1)^{-1}\sum_{i=1}^n (Y_i-\overline{Y}_n)^2$ est l'estimateur sans biais de la variance.  -->
 
-Les lois nulles approximatives de $\overline{Y}_n \stackrel{\cdot}{\sim}\mathsf{No}(\mu, \sigma^2/n)$ et $(n-1)S_n/\sigma^2 \stackrel{\cdot}{\sim} \chi^2_{n-1}$ découlent du théorème central limite.
+<!-- Les lois nulles approximatives de $\overline{Y}_n \stackrel{\cdot}{\sim}\mathsf{No}(\mu, \sigma^2/n)$ . -->
 
+<!-- Sous $\mathscr{H}_0: \mu=\mu_0$, then $T_n\stackrel{\cdot}{\sim} \mathsf{St}_{n-1}$. -->

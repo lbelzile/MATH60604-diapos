@@ -212,7 +212,7 @@ Un premier cours de statistique couvrant les notions suivantes:
 
 .pull-right[
 + statistiques descriptives
-+ tests d'hypothèse
++ tests d'hypothèses
 + comparaison de moyennes et proportions (un et deux échantillons)
 + régression linéaire simple et corrélation
 ]
@@ -246,7 +246,7 @@ Vous devrez remettre votre code avec vos devoirs/projets.
 Quels logiciels utilisera-t-on en classe?
 ]
 
-Selon le plan de cours, **SAS** (version de base). Vous devez l'installer sur votre ordinateur et suivre la capsule vidéo pour vous familiariser avec son utilisation.
+Selon le plan de cours, **SAS** (version de base). Une capsule vidéo est mise à disposition pour vous familiariser avec son utilisation.
 
 --
 
@@ -262,13 +262,18 @@ Selon le plan de cours, **SAS** (version de base). Vous devez l'installer sur vo
 
 ---
 
- Je recommande  (et surtout pour les systèmes Unix) [la version gratuite **SAS University Edition**](https://www.sas.com/en_us/software/university-edition.html) (machine virtuelle, via navigateur web)
+On va utiliser **SAS®** OnDemand for Academics: Studio. 
+
+- [Pas d'installation requise (via fureteur) + support multi-plateforme]
+- Autre option: [**SAS University Edition**](https://www.sas.com/en_us/software/university-edition.html) -- le service sera discontinué l'an prochain.
+
 
 .center[
-```{r fig.align="center", echo=FALSE, alt = "SAS University Edition", out.width="60%"}
-knitr::include_graphics("img/intro/SASUE.png")
+```{r fig.align="center", echo=FALSE, alt = "SAS OnDemand for Academics: Studio", out.width="60%"}
+knitr::include_graphics("img/intro/SASONDEMAND.png")
 ```
 ]
+
 
 .midi[
 Les TIs fournissent aussi le logiciel pour Windows via leur plateforme [(~35$ pour le téléchargement)](https://www.hec.ca/dti/assistance/pedagogie/logiciels_enseignes/Procedure-SAS.pdf).
@@ -276,9 +281,14 @@ Les TIs fournissent aussi le logiciel pour Windows via leur plateforme [(~35$ po
 
 ---
 
-### **R**
+.left[
+```{r fig.align="center", echo=FALSE, alt = "R", out.width="20%"}
+knitr::include_graphics("img/intro/rlang.png")
+```
+]
 
-Je suis un (fervent) partisan du libre-accès et de **R**, un langage de programmation/logiciel écrit par la communauté
+
+Je suis un (ardent) partisan du libre-accès et de **R**, un langage de programmation/logiciel écrit par la communauté
 
  - c'est gratuit!
  - support multi système d'exploitation
@@ -333,7 +343,7 @@ Faites-moi savoir si
 
 # Plagiat
 
-N'essayez pas! Les conséquences seraient fâcheuses et ce serait faire insulte à votre intelligence. Demandez de l'aide plutôt!
+N'essayez pas! Les conséquences seraient fâcheuses et ce serait faire insulte à votre intelligence. 
 
 - si vous vous inspirez de code écrit par d'autres (par ex., `StackOverflow`), citez adéquatement vos sources.
 - vous devez programmer vous-même votre code pour les travaux individuels (discussion avec vos pairs acceptée, mais tout partage de code et copier-coller est une infraction au code de conduite de l'école)

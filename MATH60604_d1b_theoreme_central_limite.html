@@ -11,7 +11,7 @@
     <script src="libs/tile-view/tile-view.js"></script>
     <link href="libs/panelset/panelset.css" rel="stylesheet" />
     <script src="libs/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"xc65cacad44a4117abf681a363264d92","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x17815ff98634e03b0b24689a94e8ad0","expires":14}</script>
     <script src="libs/himalaya/himalaya.js"></script>
     <script src="libs/js-cookie/js.cookie.js"></script>
     <link href="libs/editable/editable.css" rel="stylesheet" />
@@ -57,7 +57,7 @@ layout: true
 
 # Loi nulle 
 
-Lorsqu'on effectue un test statistique, on doit connaître son comportement sous l'hypothèse nulle afin de tirer une conclusion (rejeter ou ne pas rejeter `\(\mathscr{H}_0\)`)
+Lorsqu'on effectue un test statistique, on doit connaître son comportement sous l'hypothèse nulle afin de tirer une conclusion (rejeter/ne pas rejeter `\(\mathscr{H}_0\)`).
 
 La statistique de test est souvent 
 - une statistique de Wald (test-_t_, estimateur du maximum de vraisemblance)
@@ -178,16 +178,17 @@ Approximation normale pour différentes tailles d'échantillons.
 ]
 ---
 
-## Application
+&lt;!-- ## Application --&gt;
 
-La statistique du test-*t* pour un échantillon est
-`\begin{align*}
-\frac{\overline{Y}_n - \mu_0}{S_n} \stackrel{\cdot}{\sim} \mathsf{St}_{n-1},
-\end{align*}`
-où `\(S_n=(n-1)^{-1}\sum_{i=1}^n (Y_i-\overline{Y}_n)^2\)` est l'estimateur sans biais de la variance. 
+&lt;!-- La statistique du test-*t* pour un échantillon est --&gt;
+&lt;!-- \begin{align*} --&gt;
+&lt;!-- T_n= \frac{\overline{Y}_n - \mu_0}{S_n}, --&gt;
+&lt;!-- \end{align*} --&gt;
+&lt;!-- où `\(S_n=(n-1)^{-1}\sum_{i=1}^n (Y_i-\overline{Y}_n)^2\)` est l'estimateur sans biais de la variance.  --&gt;
 
-Les lois nulles approximatives de `\(\overline{Y}_n \stackrel{\cdot}{\sim}\mathsf{No}(\mu, \sigma^2/n)\)` et `\((n-1)S_n/\sigma^2 \stackrel{\cdot}{\sim} \chi^2_{n-1}\)` découlent du théorème central limite.
+&lt;!-- Les lois nulles approximatives de `\(\overline{Y}_n \stackrel{\cdot}{\sim}\mathsf{No}(\mu, \sigma^2/n)\)` . --&gt;
 
+&lt;!-- Sous `\(\mathscr{H}_0: \mu=\mu_0\)`, then `\(T_n\stackrel{\cdot}{\sim} \mathsf{St}_{n-1}\)`. --&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
