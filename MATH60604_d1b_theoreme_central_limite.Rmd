@@ -87,7 +87,7 @@ Alors la loi de la moyenne empirique $\overline{Y}_n$ est approximativement norm
 
 # Théorème central limite (formel)
 
-Soit $Y_1, \ldots, Y_n$ des variables aléatoires indépendantes et identiquement distribuées de loi $F$ de variance finie et $\overline{Y}_n = \sum_{i=1}^n Y_i$.
+Soit $Y_1, \ldots, Y_n$ des variables aléatoires indépendantes et identiquement distribuées de loi $F$ de variance finie et $\overline{Y}_n = n^{-1} \sum_{i=1}^n Y_i$.
 
 Alors, la moyenne empirique converge en distribution pour tout $y \in \mathbb{R}$,
 \begin{align*}
@@ -201,7 +201,7 @@ Approximation normale pour différentes tailles d'échantillons.
 
 La statistique du test-*t* pour un échantillon est
 \begin{align*}
-\frac{\overline{Y}_n - \mu_0}{S_n} \stackrel{\cdot}{\sim} \mathsf{T}_{n-1},
+\frac{\overline{Y}_n - \mu_0}{S_n} \stackrel{\cdot}{\sim} \mathsf{St}_{n-1},
 \end{align*}
 où $S_n=(n-1)^{-1}\sum_{i=1}^n (Y_i-\overline{Y}_n)^2$ est l'estimateur sans biais de la variance. 
 
