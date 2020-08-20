@@ -195,7 +195,7 @@ knitr::include_graphics("img/CLT/densmeansupp.png")
 Approximation normale pour différentes tailles d'échantillons.
 ]
 ]
----
+
 
 <!-- ## Application -->
 
