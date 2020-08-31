@@ -1,0 +1,237 @@
+---
+title: "Modélisation statistique"
+subtitle: "Semaine 1"
+author: "<br> <br> Dr. Léo Belzile <br> HEC Montréal"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ["xaringan-themer.css", "slides-style.css"]
+    nature:
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>
+        
+---
+
+```{r set-theme, include=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color      = "#003C71", # pantone classic blue
+  secondary_color    = "#009FDF", # pantone baby blue
+  header_font_google = google_font("Raleway"),
+  text_font_google   = google_font("Raleway", "300", "300i"),
+  code_font_google   = google_font("Source Code Pro"),
+  text_font_size     = "30px"
+)
+```
+
+
+```{r load-packages, message=FALSE, echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      message = FALSE, 
+                      warning = FALSE, 
+                      out.width = '70%', 
+                      fig.align = 'center', 
+                      tidy = FALSE)
+options(scipen = 1, digits = 3)
+library(ggplot2, warn.conflicts = FALSE, quietly = TRUE)
+theme_set(theme_minimal())
+```
+
+```{r xaringanExtra, echo=FALSE}
+xaringanExtra::use_xaringan_extra(c("tile_view", "editable","panelset", "tachyons","webcam"))
+
+```
+ 
+# Bienvenue
+
+
+.pull-left-narrow[
+```{r fig.align="center", echo=FALSE, alt="Leo", out.width="80%"}
+knitr::include_graphics("img/intro/leo_belzile_photo.png")
+```
+]
+.pull-right-wide[
+.midi[
+- Professor adjoint de Sciences de la décision
+- Doctorat de l'EPFL (Suisse)
+- Je suis spécialisé dans l'analyse des valeurs extrêmes (inondations, vagues de chaleur, etc.)
+- Je suis originaire de la Gaspésie
+- J'aime faire de la randonnée dans les Alpes
+- Attentes pour le cours: participation active en classe et rétroaction!
+
+
+[Et vous? Faisons connaissance!](https://etherpad.wikimedia.org/p/QJxypvl4sxCRynWIDUbL)
+- Origine
+- Formation précédente et parcours académique
+- Ville/région/pays actuel
+- Quelles sont vos attentes par rapport au cours?
+]
+]
+
+
+---
+
+### Sessions de groupe Zoom
+
+Pour compléter des activités en petits groupes
+
+- Plus d'options comme participants (vous pouvez partager votre écran).  
+- Si besoin, demandez de l'aide (je reçois une notification).
+- Je peux vous écrire (fenêtre contextuelle)
+- Vous perdez temporairement accès à l'historique de clavardage de la réunion.
+- Ne quittez pas la salle sans que je vous ai encouragé à le faire svp!
+- Votre microphone est fermé par défaut quand vous revenez.
+- Lorsque j'annonce la fin des sessions de groupe, il y a une latence d'une minute (quittez pour revenir immédiatement).
+
+---
+## Pratique des sessions de groupe dans Zoom
+
+
+**Activité brise-glace**: présentez-vous à vos camarades de classe en donnant cinq faits à propos de vous, par exemple.
+  - Je vis en Tunisie
+  - Je grimpe en salle
+  - Je possède une labrador appelée Marguerite
+  - J'ai travaillé dans une vie précédente comme photographe
+  - J'ai une formation d'ingénieur
+
+---
+
+# Récapitulatif de la semaine 1
+
+
+- Procédures de test
+- Théorème central limite
+- Graphiques
+- Analyse exploratoire des données
+
+--
+ 
+
+# Séance de réponses aux questions
+
+
+
+- Levez la main pour poser une question.
+  - Quand je vous nomme, ouvrez votre micro.
+- ou posez directement vos questions dans le clavardage.
+
+
+---
+
+## Tests
+
+L'inférence statistique consiste à tirer des conclusions valables sur une population à partir d'un échantillon représentatif de cette dernière.
+
+--
+
+- Choisir le modèle (souvent implicite)
+- Écrire nos hypothèses
+- Choisir et calculer la statistique de test
+- Et si $\mathscr{H}_0$? Déterminer ce qu'on aurait pu avoir dans un monde alternatif comme valeur de statistique de test
+    - à l'aide d'arguments asymptotiques (théorème central limite)
+    - distribution exacte (tests nonparamétriques avec petites taille d'échantillons)
+    - à l'aide de simulations du modèle nul (tests de permutation et autoamorçage)
+
+---
+
+```{r fig.align="center", echo=FALSE, alt="Null distribution", out.height="70%"}
+knitr::include_graphics("img/w1/infer_null.png")
+```
+.small[
+*Souvent, on dérive la loi nulle en faisant des hypothèse sur la loi des données.*
+]
+---
+
+## Graphiques
+
+Une variable:
+
+- continue: .can-edit[ -]
+- catégorielle: .can-edit[ -]
+
+Two variables
+
+- continue ${}^2$: .can-edit[ -]
+- continue $\times$ catégorielle: .can-edit[ -]
+- catégorielle ${}^2$: .can-edit[ -]
+
+---
+
+### Amélioration des graphiques
+
+```{r fig.align="center", echo=FALSE, alt="Améliorer ses graphiques", out.height="70%"}
+knitr::include_graphics("img/w1/advisor_email.png")
+```
+.center[
+.tiny[
+[Désirée de Leon et Hasse Wallum](https://github.com/tinystats/teacups-giraffes-and-statistics/blob/master/images/02_bellCurve/advisor_email.png), CC BY-NC-ND 2.0]
+]
+
+---
+
+
+# Sondage Wooclap
+
+- Allez à l'adresse: https://www.wooclap.com/MODSTATS1 pour démarrer le sondage
+
+--
+
+# Démonstration de **SAS** onDemand
+
+
+
+---
+
+### Atelier
+
+Télécharger le fichier `.zip` qui contient 30 graphiques
+
+- Quelle histoire le graphique raconte
+- Quelles variables et coordonnées?
+- Types de variables et choix de géométrie
+- Est-ce que le graphique est complet? 
+- Soulignez les bons points et les points à améliorer
+
+---
+
+### Devoir 1
+
+Je vous demanderai de choisir deux graphiques en ligne et répéter cet exercice
+(un mauvais et un bon)
+
+Sources possibles pour trouver de bons graphiques
+
+- fil Twitter de: 
+    - BBC [`@BBCNewsGraphics`]
+    - Washington Post [`@PostGraphics`]
+    - New York Times [`@nytgraphics`]
+    - etc.
+- journaux et magazines
+- gouvernements, par exemple [US Census](https://www.census.gov/library/visualizations/)
+
+
+
+---
+
+
+.discussion[]
+
+Faites une analyse exploratoire des données `assurance` en petits groupes
+
+.pull-left[
+### Questions
+
+.can-edit[-]
+]
+.pull-right[
+### Résumé
+
+.can-edit[-]
+
+]

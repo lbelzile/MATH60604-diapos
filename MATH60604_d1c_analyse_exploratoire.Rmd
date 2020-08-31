@@ -491,22 +491,6 @@ Votre graphique doit être interprétable uniquement avec la légende.
 
 ---
 
-.discussion[]
-
-Faites une analyse exploratoire des données `diamants` en atelier.
-
-.pull-left[
-### Questions
-
-.can-edit[-]
-]
-.pull-right[
-### Résumé
-
-.can-edit[-]
-
-]
----
 ### Références
 
 - [*Fundamentals of Data Visualization* par Claus O. Wilke](https://serialmentor.com/dataviz/)

@@ -64,13 +64,6 @@ knitr::include_graphics("img/intro/leo_belzile_photo.png")
 - Professeur adjoint, Sciences de la décision
 - Spécialité: modélisation d'événements rares
 
-
-
-[Et vous? Faisons connaissance!](https://etherpad.wikimedia.org/p/QJxypvl4sxCRynWIDUbL)
-- Origine
-- Formation précédente
-- Ville/région/pays actuel
-- Quelles sont vos attentes par rapport au cours?
 ]
 ]
 
@@ -347,5 +340,19 @@ N'essayez pas! Les conséquences seraient fâcheuses et ce serait faire insulte 
 
 - si vous vous inspirez de code écrit par d'autres (par ex., `StackOverflow`), citez adéquatement vos sources.
 - vous devez programmer vous-même votre code pour les travaux individuels (discussion avec vos pairs acceptée, mais tout partage de code et copier-coller est une infraction au code de conduite de l'école)
+
+
+---
+ 
+### Exemples de plagiat
+
+Voici quelques exemples de plagiat (inspirés d'une liste de l'Université de Toronto):
+
+- Travailler ensemble pour répondre à des questions.
+- Regarder les réponses de quelqu'un d'autre.
+- Laisser quelqu'un copier ou regarder vos réponses.
+- Partager ou publier les questions d'examen.
+- Discuter les questions ou les réponses de l'examen avec d'autres personnes (qui suivent ou pas le cours).
+- Faire compléter un examen ou devoir par quelqu'un d'autre . 
 
 
