@@ -1,0 +1,108 @@
+---
+title: "Modélisation statistique"
+subtitle: "\\#2.c Géométrie des moindres carrés"
+author: "<br> <br> Dr. Léo Belzile <br> HEC Montréal"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ["xaringan-themer.css", "slides-style.css"]
+    nature:
+      highlightStyle: NULL
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+        <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+        </div>
+        </div>
+---
+  
+  
+```{r set-theme, include=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color      = "#003C71", # pantone classic blue
+  secondary_color    = "#009FDF", # pantone baby blue
+  header_font_google = google_font("Raleway","700"),
+  text_font_google   = google_font("Raleway", "400", "400i"),
+  code_font_google   = google_font("Source Code Pro"),
+  text_font_size     = "30px"
+)
+```
+
+
+```{r load-packages, message=FALSE, echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      message = FALSE, 
+                      warning = FALSE, 
+                      out.width = '70%', 
+                      fig.align = 'center', 
+                      tidy = FALSE)
+
+```
+
+```{r xaringanExtra, echo=FALSE}
+xaringanExtra::use_xaringan_extra(c("tile_view", "editable","panelset", "webcam"))
+xaringanExtra::use_extra_styles(
+  hover_code_line = TRUE,         #<<
+  mute_unhighlighted_code = TRUE  #<<
+)
+```
+
+## Rappels d'algèbre linéaire
+
+Si $\mathbf{X}$ est une matrice $n\times p$, l'espace engendré par les colonnes de $\mathbf{X}$ est
+\begin{align*}
+\mathcal{S}(\mathbf{X}) =\{\mathbf{X}\boldsymbol{a}, \boldsymbol{a} \in \mathbb{R}^p\}
+\end{align*}
+
+L'équation du modèle linéaire 
+\begin{align*}
+\boldsymbol{Y} = \mathbf{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon}
+\end{align*}
+correspond donc à un élément (inconnu) du sous-espace vectoriel engendré $\mathbf{X}$ plus un aléa.
+
+---
+
+## Moindres carrés ordinaires
+
+Trouver l'élément de $\mathcal{S}(\mathbf{X})$ le plus près (distance minimale) de $\boldsymbol{y}$, soit 
+\begin{align*}
+\widehat{\boldsymbol{\beta}} = \min_{\boldsymbol{\beta} \in \mathbb{R}^p} \|\boldsymbol{y} - \mathbf{X} \boldsymbol{\beta}\|^2
+\end{align*}
+
+Intuition: $\varepsilon_1, \ldots, \varepsilon_n$ et $\beta_0, \ldots, \beta_{p-1}$ sont inconnus, on ne peut les recouvrer ( $n$ observations, $n+p$ inconnues).
+
+---
+
+## Géométrie des colonnes
+
+On cherche à trouver la meilleur approximation $p$-dimensionnelle dans $\mathcal{S}(\mathbf{X})$.
+
+```{r olsgeom, echo = FALSE, out.width="70%"}
+knitr::include_graphics('img/c2/OLSgeometry.png')
+```
+La solution du problème des moindres carrés est la projection de $\boldsymbol{y}$ sur $\mathcal{S}(\mathbf{X})$, soit $\mathbf{H}\boldsymbol{y}$, où $\mathbf{H}=\mathbf{X}(\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top$ est la matrice de projection.
+
+---
+
+### Décomposition orthogonale
+
+On écrit
+\begin{align*}
+\boldsymbol{y} &= \mathbf{H}\boldsymbol{y} + (\mathbf{I}_n-\mathbf{H})\boldsymbol{y}
+\\ &=
+\mathbf{X}\widehat{\boldsymbol{\beta}} + \boldsymbol{e}
+\end{align*}
+
+Les résidus $\boldsymbol{e}$ sont orthogonaux aux colonnes de  $\mathbf{X}$ et donc aux valeurs ajustées $\widehat{\boldsymbol{y}}=\mathbf{X}\widehat{\boldsymbol{\beta}}$.
+
+- Par le théorème de Pythagore, $\|\boldsymbol{y}\|^2 = \|\widehat{\boldsymbol{y}}\|^2 + \|\boldsymbol{e}\|^2$.
+
+Si $\mathbf{1}_n \in \mathcal{S}(\mathbf{X})$ (le modèle inclut une ordonnée à l'origine)
+- La moyenne des résidus $\boldsymbol{e}$ est nulle.
+- La régression linéaire de $\widehat{\boldsymbol{y}}$ sur $\boldsymbol{e}$ a une ordonnée à l'origine et une pente nulle (aucune corrélation linéaire).
+
+
+

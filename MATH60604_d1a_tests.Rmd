@@ -67,7 +67,7 @@ xaringanExtra::use_extra_styles(
 .center[**Analogie du procès**]
 
 ```{r twelveangrymen, echo = FALSE, out.width="65%"}
-knitr::include_graphics('img/tests/01-intro-12_Angry_Men_scene.jpg')
+knitr::include_graphics('img/c1/tests/01-intro-12_Angry_Men_scene.jpg')
 ```
 .figcaption[Capture d'écran du drame judiciaire _Douze hommes en colère_ (1957)]
 
@@ -93,7 +93,7 @@ Voici les étapes de la démarche.
 
 
 ```{r tech3lab, echo = FALSE, out.width="85%"}
-knitr::include_graphics('img/tests/01-intro-Tech3.png')
+knitr::include_graphics('img/c1/tests/01-intro-Tech3.png')
 ```
 
 
@@ -103,7 +103,7 @@ knitr::include_graphics('img/tests/01-intro-Tech3.png')
 
 
 ```{r texter, echo = FALSE, out.width="85%"}
-knitr::include_graphics('img/tests/01-intro-texter.jpg')
+knitr::include_graphics('img/c1/tests/01-intro-texter.jpg')
 ```
 
 ---
@@ -187,13 +187,13 @@ run;
 .panel[.panel-name[Sortie **SAS**]
 .pull-left[
 ```{r distraction_SAS1, echo = FALSE, out.width="100%"}
-knitr::include_graphics('img/tests/tests_sas_g1.png')
+knitr::include_graphics('img/c1/tests/tests_sas_g1.png')
 ```
 ]
 
 .pull-right[
 ```{r distraction_SAS2, echo = FALSE, out.width="100%"}
-knitr::include_graphics('img/tests/tests_sas_g2.png')
+knitr::include_graphics('img/c1/tests/tests_sas_g2.png')
 ```
 ]
 ]

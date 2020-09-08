@@ -101,7 +101,7 @@ où $\Phi(y)$ est la fonction de répartition de $\mathsf{No}(0, 1)$.
 Représentons graphiquement le théorème central limite en tirant des échantillons de la loi suivante (tronquée à gauche, multimodale, etc.)
 
 ```{r fig.align="center", echo=FALSE, out.width="70%"}
-knitr::include_graphics("img/CLT/densite.png")
+knitr::include_graphics("img/c1/CLT/densite.png")
 ```
 
 ---
@@ -109,7 +109,7 @@ knitr::include_graphics("img/CLT/densite.png")
 Tirons $20$ échantillons aléatoires de taille $n=10$ de cette loi.
 
 ```{r fig.align="center", echo=FALSE, out.width="40%"}
-knitr::include_graphics("img/CLT/clt_mean_10.gif")
+knitr::include_graphics("img/c1/CLT/clt_mean_10.gif")
 ```
 
 .center[
@@ -123,7 +123,7 @@ Répartition des $n=10$ observations et moyenne empirique (trait rouge)
 Si on augmente la taille de l'échantillon à $n=100$, la variabilité de la moyenne diminue.
 
 ```{r fig.align="center", echo=FALSE,  out.width="40%"}
-knitr::include_graphics("img/CLT/clt_mean_100.gif")
+knitr::include_graphics("img/c1/CLT/clt_mean_100.gif")
 ```
 
 .center[
@@ -137,7 +137,7 @@ Répartition des $n=100$ observations et moyenne empirique (trait rouge)
 La même chose, avec $n=1000$ observations par échantillon.
 
 ```{r fig.align="center", echo=FALSE, out.width="40%"}
-knitr::include_graphics("img/CLT/clt_mean_1000.gif")
+knitr::include_graphics("img/c1/CLT/clt_mean_1000.gif")
 ```
 .center[
 .midi[
@@ -150,7 +150,7 @@ Répartition des $n=1000$ observations et moyenne empirique (trait rouge)
 Si on fait un histogramme des moyennes (traits rouges), qu'est-ce qu'on obtient?
 
 ```{r fig.align="center", echo=FALSE, out.width="60%"}
-knitr::include_graphics("img/CLT/densmean10.png")
+knitr::include_graphics("img/c1/CLT/densmean10.png")
 ```
 
 .center[
@@ -163,7 +163,7 @@ Distribution empirique et approximation normale de la moyenne de $n=10$ observat
 L'approximation fournie par le théorème central limite est meilleure quand la taille de l'échantillon $n$ augmente.
 
 ```{r fig.align="center", echo=FALSE,  out.width="60%"}
-knitr::include_graphics("img/CLT/densmean100.png")
+knitr::include_graphics("img/c1/CLT/densmean100.png")
 ```
 .center[
 .midi[
@@ -175,7 +175,7 @@ Distribution empirique et approximation normale de la moyenne de $n=100$ observa
 
 La convergence est plus rapide au centre de la loi que dans la queue. 
 ```{r fig.align="center", echo=FALSE, out.width="60%"}
-knitr::include_graphics("img/CLT/densmean1000.png")
+knitr::include_graphics("img/c1/CLT/densmean1000.png")
 ```
 
 .center[
@@ -188,7 +188,7 @@ Distribution empirique et approximation normale de la moyenne de $n=1000$ observ
 La variance de la moyenne $\overline{Y}_n$ quand $\mathsf{Va}(Y_i)=\sigma^2$ est $\sigma^2/n$.
 
 ```{r fig.align="center", echo=FALSE, out.width="60%"}
-knitr::include_graphics("img/CLT/densmeansupp.png")
+knitr::include_graphics("img/c1/CLT/densmeansupp.png")
 ```
 .center[
 .midi[

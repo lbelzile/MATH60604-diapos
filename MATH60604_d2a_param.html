@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Modélisation statistique</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="    Dr. Léo Belzile   HEC Montréal" />
+    <script src="libs/header-attrs-2.3/header-attrs.js"></script>
+    <link href="libs/tile-view-0.2.3/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view-0.2.3/tile-view.js"></script>
+    <link href="libs/panelset-0.2.3/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset-0.2.3/panelset.js"></script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"fc2d42c72c294aa3b52653153192f323","expires":14}</script>
+    <script src="libs/himalaya-1.1.0/himalaya.js"></script>
+    <script src="libs/js-cookie-3.0.0/js.cookie.js"></script>
+    <link href="libs/editable-0.2.3/editable.css" rel="stylesheet" />
+    <script src="libs/editable-0.2.3/editable.js"></script>
+    <script src="libs/xaringanExtra-webcam-0.0.1/webcam.js"></script>
+    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
+    <link href="libs/xaringanExtra-extra-styles-0.2.3/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="slides-style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Modélisation statistique
+## #2.a Interprétation des paramètres du modèle linéaire
+### <br> <br> Dr. Léo Belzile <br> HEC Montréal
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+## Interprétation des coefficients du modèle linéaire
+
+On considère le modèle linéaire
+`\begin{align*}
+Y = \beta_0 + \beta_1\mathrm{X}_1 + \cdots + \beta_p\mathrm{X}_p + \varepsilon,
+\end{align*}`
+où `\(\varepsilon\)` est un aléa de moyenne zéro.
+
+
+- `\(\beta_0\)` est la moyenne de la réponse quand `\(\mathrm{X}_1, \ldots, \mathrm{X}_p\)` sont conjointement nulles.
+- `\(\beta_j\)` `\((1 \leq j \leq p)\)` est la différence moyenne de `\(Y\)` quand `\(\mathrm{X}_j\)` augmente d'une unité, *ceteris paribus*.
+  - si pas d'interaction ou de fonctions impliquant `\(\mathrm{X}_j\)` etc.
+
+
+---
+
+## Données `intention`
+
+- Dans le cadre d’une étude réalisée au Tech3Lab, des cobayes devaient naviguer sur un site internet qui contenait, entre autres choses, une
+publicité pour des bonbons.
+- Pendant la navigation, un oculomètre mesurait l’endroit où se posait
+le regard du sujet. On a ainsi pu mesurer si le sujet a regardé la publicité et la durée du visionnement.
+- Un logiciel d’analyse des expressions faciales (FaceReader) a été utilisé pour mesurer l’émotion du sujet pendant qu’il regardait la publicité.
+- À la fin de l’expérience, un questionnaire mesurait l’intention d’achat du sujet pour ces bonbons, ainsi que des variables socio-démographiques.
+
+---
+
+## Objectifs de l'étude
+
+Évaluer si
+
+1. il y a un lien entre la durée de la fixation de la publicité
+et l’intention d’achat
+2. l’émotion perçue est liée à l’intention d’achat.
+
+Seuls les 120 sujets qui ont regardé la publicité sont inclus dans les données `intention`.
+
+---
+
+## Description des données
+
+-  `intention`:  variable discrète entre 2 et 14; plus elle est élevée, plus le sujet exprime l’intention d’acheter ce produit. Le score a été construit en additionnant les réponses de deux questions sur une échelle de Likert allant de fortement en désaccord (1) à fortement en accord (7).
+-  `fixation`: durée totale de fixation de la publicité (en secondes).
+-  `emotion`: une mesure de la valence durant la fixation, soit le ratio de la probabilité d’une émotion positive sur la probabilité d’une émotion négative.
+
+---
+
+-  `sexe`: sexe du sujet, soit homme (0) ou femme (1).
+-  `age`: âge du sujet (en années).
+-  `statut`: statut matrimonial, soit célibaire (0) ou en couple (1).
+-  `revenu`: variable catégorielle indiquant le revenu annuel du sujet; un parmi
+(`1`) `\([0,  20\ 000]\)`;
+(`2`) `\([20\ 000,  60\ 000]\)`;
+(`3`) `\(60\ 000\)` et plus
+-  `educ`: variable catégorielle indiquant le niveau d’éducation, soit le plus haut grade obtenu
+(`1`) secondaire ou moindre;
+(`2`) collégial;
+(`3`) universitaire.
+
+
+
+---
+
+## Analyse exploratoire des données
+
+.panelset[
+
+.panel[.panel-name[code SAS]
+
+```sas
+proc means data=modstat.intention mean std min max maxdec=2;
+var intention sexe age statut fixation emotion;
+run;
+
+proc freq data=modstat.intention;
+tables intention revenu educ;
+run;
+
+proc sgplot data=modstat.intention;
+histogram intention emotion;
+run;
+
+```
+]
+
+.panel[.panel-name[sortie SAS (1)]
+
+&lt;img src="img/c2/diapos3-e1.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+]
+.panel[.panel-name[sortie SAS (2)]
+
+&lt;img src="img/c2/diapos3-e2.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+]
+]
+---
+
+## Terminologie
+
+- variable **réponse** ( `\(Y\)` ) ou régressande: variable d’intérêt
+- variables **explicatives**, **covariables**, régresseurs ou prédicteurs ( `\(\mathbf{X}\)` ): variables potentiellement liées à `\(Y\)`.
+
+
+Dans notre exemple, on a
+
+- variable réponse: `intention`,
+- variables explicatives ( `\(\mathbf{X}\)` ): `fixation`, `emotion`, `sexe`, `age`, `revenu`, `educ`, `statut`.
+
+On cherche à mesurer l’effet de `fixation` et `emotion` sur la variable
+`intention` en tenant compte des variables socio-démographiques
+
+---
+
+### Modèle linéaire simple
+
+Considérons un modèle avec `\(\texttt{fixation}\)` comme unique régresseur.
+
+.panelset[
+
+.panel[.panel-name[code SAS]
+
+
+```sas
+proc sgplot data=modstat.intention noautolegend;
+scatter y=intention x=fixation;
+reg y=intention x=fixation;
+yaxis label="intention d'achat";
+xaxis label="temps de fixation (en secondes)";
+run;
+
+proc glm data=modstat.intention;
+ *Imprimer seulement les coefficients;
+ods select ParameterEstimates;
+model intention=fixation;
+run;
+```
+
+]
+
+
+.panel[.panel-name[Nuage de points]
+
+&lt;img src="img/c2/diapos3-e3b.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.panel[.panel-name[Estimés]
+
+&lt;img src="img/c2/diapos3-e5.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+La droite ajustée est
+
+`\begin{align*}
+\widehat{\texttt{intention}} = 6.45 + 1.14 \texttt{fixation}
+\end{align*}`
+
+Problèmes?
+]
+
+]
+
+---
+
+
+
+&lt;!-- -  **slope** `\(\widehat{\beta}_1=1.14\)`: for every additional second of \texttt{fixation}, the intention score increases *on average* by `\(1.14\)`. The longer a person fixates on an ad, the higher their intention of buying the product. --&gt;
+&lt;!-- -  **intercept** `\(\widehat{\beta}_0=6.45\)`: the mean intention score for individuals who did not look at the ad (i.e., when `\(\texttt{fixation}=0\)`)  (but only people who looked at the ad were included in the dataset). --&gt;
+
+&lt;!-- Caveats? (consider the fitted value for `\(\texttt{fixation}=7\)`). --&gt;
+
+
+
+## Spécification de variables catégorielles en **SAS**
+
+- La commande `class` crée une variable catégorielle (collection de variables binaires).
+- La catégorie de référence est spécifiée à l'aide de `ref`; par défaut, c'est la première valeur rencontrée.
+- Dans **R**, l'analogue est `factor` et la référence est la première valeur en ordre alphanumérique.
+
+---
+
+## Variable explicative binaire
+
+Soit un modèle linéaire avec `\(\texttt{sexe}\)` comme seul régresseur.
+
+
+.panelset[
+
+
+.panel[.panel-name[code SAS]
+
+
+```sas
+proc glm data=modstat.intention;
+ods select ParameterEstimates;
+model intention=sexe;
+run;
+
+/* Si pas codé avec 0/1, utiliser "class" */
+proc glm data=modstat.intention;
+class sexe(ref="0");
+model intention=sexe / solution;
+run;
+```
+
+]
+
+
+.panel[.panel-name[Estimés]
+
+Le modèle postulé est
+`\begin{align*}
+\texttt{intention} = \beta_0 + \beta_1 \texttt{sexe} + \varepsilon
+\end{align*}`
+
+&lt;img src="img/c2/diapos3-e6.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.panel[.panel-name[Interprétation]
+
+-  La moyenne du score d’intention d’achat des hommes est de 7.55
+points.
+- La moyenne du score d’intention d’achat des femmes est de 8.92
+points.
+L’estimé de la « pente » est `\(\widehat{\beta}_1=\)` 1.37, soit une augmentation de l’intention moyenne d’achat de 1.37 points pour les femmes par
+rapport à la moyenne des hommes.
+
+]
+]
+
+---
+
+## Variables explicatives catégorielles
+
+-  Les variables  `\(\texttt{revenu}\)` et `\(\texttt{educ}\)` sont catégorielles et chacune a trois niveaux.
+-  L’inclusion d’une variable catégorielle à `\(k\)` niveaux requiert `\(k-1\)`
+variables explicatives additionnelles dans le modèle. Par exemple
+  -  `educ1 = 1` si `\(\texttt{educ = 1}\)` et zéro sinon.
+  -  `educ2 = 1` si `\(\texttt{educ = 2}\)` et zéro sinon.
+
+Si le modèle contient l’ordonnée à l’origine, inclure une troisième variable binaire est superflu.
+
+|`educ` | ordonnée à l'origine | `educ1` | `educ2`|
+|:--:|:--:|:--:|:--:|
+| `1` | `\(1\)` | `\(1\)` | `\(0\)` |
+| `2` | `\(1\)` | `\(0\)` | `\(1\)` |
+| `3` | `\(1\)` | `\(0\)` | `\(0\)` |
+
+-  Quand `\(\texttt{educ}=3\)` (référence), les deux indicatrices sont nulles.
+
+---
+
+## Ajuster le modèle avec des indicatrices
+
+Pour ajuster le modèle, on peut remplacer `\(\texttt{educ}\)` par les deux indicatrices
+
+
+.panelset[
+
+
+.panel[.panel-name[code SAS (1)]
+
+
+```sas
+data intention; 
+set modstat.intention; 
+educ1=(educ=1); 
+educ2=(educ=2); 
+run;
+
+proc glm data=intention; 
+ods select ParameterEstimates;
+model intention=educ1 educ2; 
+run;
+
+ /* Alternative avec `class` */
+proc glm data=modstat.intention; 
+ods select ParameterEstimates;
+class educ(ref="3"); 
+model intention=educ / solution; 
+run;
+```
+
+]
+.panel[.panel-name[sortie SAS (1)]
+
+
+&lt;img src="img/c2/diapos3-e7.png" width="55%" style="display: block; margin: auto;" /&gt;
+]
+.panel[.panel-name[sortie SAS (2)]
+
+
+&lt;img src="img/c2/diapos3-e8.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+Les résultats sont identiques selon que l'on crée les indicateurs manuellement ou avec `class`.
+
+]
+]
+
+---
+
+## Interprétation des effets différentiels
+
+-  La moyenne empirique de l'intention pour les trois catégories d'éducation est  `\(8.77, 8.71\)`, et `\(7.11\)` pour respectivement `\(\texttt{1}\)`, `\(\texttt{2}\)` et `\(\texttt{3}\)`.
+-  La moyenne d' `\(\texttt{intention}\)` est `\(1.65\)` points plus élevée quand `\(\texttt{educ}=\texttt{1}\)` que quand `\(\texttt{educ}=\texttt{3}\)`, etc.
+-  Pour comparer `\(\texttt{educ}=\texttt{1}\)` et `\(\texttt{educ}=\texttt{2}\)`, on pourrait réajuster le modèle en changeant la catégorie de référence (exercice).
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": null,
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"slideNumberFormat": "<div class=\"progress-bar-container\">   <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">   </div> </div>"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
