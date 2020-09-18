@@ -141,7 +141,7 @@ L'inférence statistique consiste à tirer des conclusions valables sur une popu
 ---
 
 ```{r fig.align="center", echo=FALSE, alt="Null distribution", out.height="70%"}
-knitr::include_graphics("img/w1/infer_null.png")
+knitr::include_graphics("img/c1/w1/infer_null.png")
 ```
 .small[
 *Souvent, on dérive la loi nulle en faisant des hypothèse sur la loi des données.*
@@ -166,7 +166,7 @@ Two variables
 ### Amélioration des graphiques
 
 ```{r fig.align="center", echo=FALSE, alt="Améliorer ses graphiques", out.height="70%"}
-knitr::include_graphics("img/w1/advisor_email.png")
+knitr::include_graphics("img/c1/w1/advisor_email.png")
 ```
 .center[
 .tiny[

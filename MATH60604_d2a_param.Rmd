@@ -301,6 +301,8 @@ variables explicatives additionnelles dans le modèle. Par exemple
   -  `educ1 = 1` si $\texttt{educ = 1}$ et zéro sinon.
   -  `educ2 = 1` si $\texttt{educ = 2}$ et zéro sinon.
 
+---
+
 Si le modèle contient l’ordonnée à l’origine, inclure une troisième variable binaire est superflu.
 
 |`educ` | ordonnée à l'origine | `educ1` | `educ2`|
@@ -370,3 +372,11 @@ Les résultats sont identiques selon que l'on crée les indicateurs manuellement
 -  La moyenne empirique de l'intention pour les trois catégories d'éducation est  $8.77, 8.71$, et $7.11$ pour respectivement $\texttt{1}$, $\texttt{2}$ et $\texttt{3}$.
 -  La moyenne d' $\texttt{intention}$ est $1.65$ points plus élevée quand $\texttt{educ}=\texttt{1}$ que quand $\texttt{educ}=\texttt{3}$, etc.
 -  Pour comparer $\texttt{educ}=\texttt{1}$ et $\texttt{educ}=\texttt{2}$, on pourrait réajuster le modèle en changeant la catégorie de référence (exercice).
+
+
+---
+
+## Commentaire sur la commande `class`
+
+- Dans **SAS**, les noms des niveaux de la variable catégorielles sont sensibles à la casse à l'intérieur de `class`, par exemple, `class echelon(ref="ProfAdjoint")`
+- **SAS** n'imprimer pas le tableau des coefficients lorsque `class` est spécifié, hormis si `/ solution` est ajouté à la ligne contenant l'appel à `model`.

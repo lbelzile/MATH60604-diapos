@@ -4,19 +4,19 @@
     <title>Modélisation statistique</title>
     <meta charset="utf-8" />
     <meta name="author" content="    Dr. Léo Belzile   HEC Montréal" />
-    <script src="libs/header-attrs-2.3/header-attrs.js"></script>
-    <link href="libs/tile-view-0.2.3/tile-view.css" rel="stylesheet" />
-    <script src="libs/tile-view-0.2.3/tile-view.js"></script>
-    <link href="libs/panelset-0.2.3/panelset.css" rel="stylesheet" />
-    <script src="libs/panelset-0.2.3/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"fc2d42c72c294aa3b52653153192f323","expires":14}</script>
-    <script src="libs/himalaya-1.1.0/himalaya.js"></script>
-    <script src="libs/js-cookie-3.0.0/js.cookie.js"></script>
-    <link href="libs/editable-0.2.3/editable.css" rel="stylesheet" />
-    <script src="libs/editable-0.2.3/editable.js"></script>
-    <script src="libs/xaringanExtra-webcam-0.0.1/webcam.js"></script>
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x07c0e23df0e449ab543ea64132f45b5","expires":14}</script>
+    <script src="libs/himalaya/himalaya.js"></script>
+    <script src="libs/js-cookie/js.cookie.js"></script>
+    <link href="libs/editable/editable.css" rel="stylesheet" />
+    <script src="libs/editable/editable.js"></script>
+    <script src="libs/xaringanExtra-webcam/webcam.js"></script>
     <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
-    <link href="libs/xaringanExtra-extra-styles-0.2.3/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link href="libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="slides-style.css" type="text/css" />
   </head>
@@ -282,6 +282,8 @@ variables explicatives additionnelles dans le modèle. Par exemple
   -  `educ1 = 1` si `\(\texttt{educ = 1}\)` et zéro sinon.
   -  `educ2 = 1` si `\(\texttt{educ = 2}\)` et zéro sinon.
 
+---
+
 Si le modèle contient l’ordonnée à l’origine, inclure une troisième variable binaire est superflu.
 
 |`educ` | ordonnée à l'origine | `educ1` | `educ2`|
@@ -348,6 +350,14 @@ Les résultats sont identiques selon que l'on crée les indicateurs manuellement
 -  La moyenne empirique de l'intention pour les trois catégories d'éducation est  `\(8.77, 8.71\)`, et `\(7.11\)` pour respectivement `\(\texttt{1}\)`, `\(\texttt{2}\)` et `\(\texttt{3}\)`.
 -  La moyenne d' `\(\texttt{intention}\)` est `\(1.65\)` points plus élevée quand `\(\texttt{educ}=\texttt{1}\)` que quand `\(\texttt{educ}=\texttt{3}\)`, etc.
 -  Pour comparer `\(\texttt{educ}=\texttt{1}\)` et `\(\texttt{educ}=\texttt{2}\)`, on pourrait réajuster le modèle en changeant la catégorie de référence (exercice).
+
+
+---
+
+## Commentaire sur la commande `class`
+
+- Dans **SAS**, les noms des niveaux de la variable catégorielles sont sensibles à la casse à l'intérieur de `class`, par exemple, `class echelon(ref="ProfAdjoint")`
+- **SAS** n'imprimer pas le tableau des coefficients lorsque `class` est spécifié, hormis si `/ solution` est ajouté à la ligne contenant l'appel à `model`.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
