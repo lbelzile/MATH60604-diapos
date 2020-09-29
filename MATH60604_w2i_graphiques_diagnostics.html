@@ -9,7 +9,7 @@
     <script src="libs/tile-view-0.2.3/tile-view.js"></script>
     <link href="libs/panelset-0.2.3/panelset.css" rel="stylesheet" />
     <script src="libs/panelset-0.2.3/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"af0c613341ba4fd29427f6ded238396d","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"cbda3de04dbe42f897e82dbed603458b","expires":14}</script>
     <script src="libs/himalaya-1.1.0/himalaya.js"></script>
     <script src="libs/js-cookie-3.0.0/js.cookie.js"></script>
     <link href="libs/editable-0.2.3/editable.css" rel="stylesheet" />
@@ -93,7 +93,7 @@ proc glm data=modstat.intention
 class sexe educ revenu;
 model intention=fixation emotion
  sexe age revenu educ statut / ss3 solution;
-output out=resid predicted=fitted r=ores rstudent=jsr;
+output out=residus predicted=ajustees r=reso rstudent=rsc;
 run;
 ```
 
@@ -187,7 +187,7 @@ Plusieurs graphiques potentiels avec les résidus ordinaires...
 
 On considère un modèle linéaire avec `age`, `sexe`, `region` et une interaction entre `fumeur`/`obese` et `imc`.
 
-- Les diagrammes nous indiquent que le modèles inadéquats, mais les apparences sont parfois trompeuses: 
+- Les diagrammes nous indiquent que le modèle est inadéquat, mais les apparences sont parfois trompeuses: 
  - à cause de valeurs abnormalement élevées (trop grand frais), la moyenne estimée des non-fumeurs est plus grande que la majorité des observations
  - l'ajustement est bon hormis pour ces valeurs inattendues: cela a des répercussions, notamment pour le diagramme quantile-quantile.
  - une transformation logarithmique pourrait potentiellement réduire l'impact de ces valeurs, ou alors une régression robuste qui pondère à la baisse les points trop différents.
@@ -236,7 +236,7 @@ run;
 
 &lt;img src="img/c2/diaggraph_e2.png" width="55%" style="display: block; margin: auto;" /&gt;
 
-Plus de structure dans les résidus face à l'indice de masse corporelle.
+Il n'y a plus de structure dans les résidus face à l'indice de masse corporelle.
 
 ]
 

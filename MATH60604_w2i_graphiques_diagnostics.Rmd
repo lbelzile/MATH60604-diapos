@@ -103,7 +103,7 @@ proc glm data=modstat.intention
 class sexe educ revenu;
 model intention=fixation emotion
  sexe age revenu educ statut / ss3 solution;
-output out=resid predicted=fitted r=ores rstudent=jsr;
+output out=residus predicted=ajustees r=reso rstudent=rsc;
 run;
 ```
 
@@ -202,7 +202,7 @@ Plusieurs graphiques potentiels avec les résidus ordinaires...
 
 On considère un modèle linéaire avec `age`, `sexe`, `region` et une interaction entre `fumeur`/`obese` et `imc`.
 
-- Les diagrammes nous indiquent que le modèles inadéquats, mais les apparences sont parfois trompeuses: 
+- Les diagrammes nous indiquent que le modèle est inadéquat, mais les apparences sont parfois trompeuses: 
  - à cause de valeurs abnormalement élevées (trop grand frais), la moyenne estimée des non-fumeurs est plus grande que la majorité des observations
  - l'ajustement est bon hormis pour ces valeurs inattendues: cela a des répercussions, notamment pour le diagramme quantile-quantile.
  - une transformation logarithmique pourrait potentiellement réduire l'impact de ces valeurs, ou alors une régression robuste qui pondère à la baisse les points trop différents.
@@ -254,7 +254,7 @@ run;
 knitr::include_graphics('img/c2/diaggraph_e2.png')
 ```
 
-Plus de structure dans les résidus face à l'indice de masse corporelle.
+Il n'y a plus de structure dans les résidus face à l'indice de masse corporelle.
 
 ]
 
