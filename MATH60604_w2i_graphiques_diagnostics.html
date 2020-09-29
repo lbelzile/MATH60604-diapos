@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Modélisation statistique</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="    Dr. Léo Belzile   HEC Montréal" />
+    <script src="libs/header-attrs-2.3/header-attrs.js"></script>
+    <link href="libs/tile-view-0.2.3/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view-0.2.3/tile-view.js"></script>
+    <link href="libs/panelset-0.2.3/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset-0.2.3/panelset.js"></script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"af0c613341ba4fd29427f6ded238396d","expires":14}</script>
+    <script src="libs/himalaya-1.1.0/himalaya.js"></script>
+    <script src="libs/js-cookie-3.0.0/js.cookie.js"></script>
+    <link href="libs/editable-0.2.3/editable.css" rel="stylesheet" />
+    <script src="libs/editable-0.2.3/editable.js"></script>
+    <script src="libs/xaringanExtra-webcam-0.0.1/webcam.js"></script>
+    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
+    <link href="libs/xaringanExtra-extra-styles-0.2.3/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="slides-style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Modélisation statistique
+## #2.i Diagnostics graphiques des résidus
+### <br> <br> Dr. Léo Belzile <br> HEC Montréal
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+## Postulats de validité du modèle
+
+On postule que les erreurs `\(\varepsilon_i \sim \mathsf{No}(0,\sigma^2)\)` sont indépendantes et identiquement distribuées.
+
+### Implications
+
+- indépendance
+- linéarité
+- homoscédasticité (égalité des variances)
+- normalité
+
+
+---
+
+### Postulats revisités
+
+1. **Indépendance**: les erreurs `\(\varepsilon_1, \ldots, \varepsilon_n\)` sont indépendantes, idem pour les observations)
+2. **Linéarité**: l'espérance des erreurs est `\(\mathsf{E}(\varepsilon_i)=0\)` pour tout `\(i=1, \ldots, n\)`.
+ - cela implique que le modèle pour la moyenne est correctement spécifié, d'où `\(\mathsf{E}(Y \mid \mathbf{X})=\beta_0+\beta_1\mathrm{X}_1+\cdots + \beta_p \mathrm{X}_p\)`
+ - toutes les variables explicatives importantes sont incluses dans le modèle.
+ - leur effet (présumé linéaire) est adéquatement représenté par le modèle.
+3. **Homoscédasticité**: la variance des erreurs est **constante** `\(\mathsf{Va}(\varepsilon_i)=\sigma^2\)` pour `\(i=1, \ldots, n\)`.
+ - corollaire: la variance `\(Y_i\)` est constante et ne dépend pas de `\(\mathbf{X}\)`.
+4. **Normalité**: les termes d'erreurs `\(\boldsymbol{\varepsilon}\)` suivent une loi normale.
+
+---
+
+### Diagnostics graphiques (par défaut)
+
+- Dans la procédure `glm`, l'option `plots=diagnostics residuals(smooth)` permet d'obtenir une panoplie de diagrammes pour analyser les résidus (et faires des graphiques des résidus ordinaires contre les variables explicatives).
+
+Dans **SAS**, on peut sauvegarder la sortie de `glm` à l'aide de la commande`output`. 
+
+- Dans l'extrait de code qui suit, on sauvegarde
+  - les valeurs ajustées `ajustees`
+  - les résidus ordinaires `reso`
+  - les résidus studentisés externes `rsc` 
+dans une base de données temporaire `residus`.
+
+---
+
+.panelset[
+
+.panel[.panel-name[Code **SAS**]
+
+```sas
+ods graphics on;
+proc glm data=modstat.intention 
+ plots=diagnostics residuals;
+class sexe educ revenu;
+model intention=fixation emotion
+ sexe age revenu educ statut / ss3 solution;
+output out=resid predicted=fitted r=ores rstudent=jsr;
+run;
+```
+
+]
+
+.panel[.panel-name[Sortie **SAS** (1)]
+&lt;img src="img/c2/diapos3-e16.png" width="55%" style="display: block; margin: auto;" /&gt;
+]
+.panel[.panel-name[Sortie **SAS** (2)]
+&lt;img src="img/c2/diapos3-e15.png" width="45%" style="display: block; margin: auto;" /&gt;
+]
+
+]
+
+---
+
+### Graphiques 
+
+Dans le sens des aiguilles d'une montre, en partant du coin supérieur gauche:
+
+- résidus ordinaires contre valeurs ajustées (linéarité)
+- résidus studentisés contre valeurs ajustées (hétéroscédasticité)
+- effet de levier (influence des observations sur l'estimateur)
+- diagramme quantile-quantile des résidus (normalité)
+- nuage de point de `\(Y_i\)` versus `\(\hat{Y}_i\)` (linéarité)
+- distance de Cook (détection des valeurs aberrantes)
+- densité et histogramme des résidus ordinaires (normalité)
+
+---
+
+### Conclusion
+ 
+Dans l'exemple, tous les indicateurs sont verts et nous n'avons aucune raison de douter des postulats de notre modèle. 
+
+
+Cela conforte l'idée que les résultats de notre analyse (conclusions des tests d'hypothèse et intervalles de confiances) sont valides.
+ 
+---
+
+## Indépendance
+
+.panelset[
+
+.panel[.panel-name[Contexte]
+
+- Les données `trafficaerien` contient des données mensuelles du traffic aérien mondial dans les années 50.
+- On ajuste un modèle log-linéaire avec mois (catégorielle) et année pour expliquer le nombre de passagers.
+- La fonction d'autocorrélation (ACF) indique une dépendance résiduelle mensuelle et annuelle.
+
+]
+.panel[.panel-name[Corrélogramme]
+&lt;img src="img/c2/diaggraph_e7.png" width="55%" style="display: block; margin: auto;" /&gt;
+]
+.panel[.panel-name[Code **SAS**]
+Ce graphique ne sert que pour les séries chronologiques!
+
+
+```sas
+data trafficaerien;
+set modstat.trafficaerien;
+lnpassagers = log(passagers);
+run;
+
+proc glm data=trafficaerien;
+model lnpassagers = mois annee;
+output out=trafficaerienresid r=reso;
+run;
+
+proc timeseries data=trafficaerienresid 
+  plots=(acf pacf);
+var reso;
+run;
+```
+]
+]
+
+---
+
+## Postulat de linéarité
+
+Plusieurs graphiques potentiels avec les résidus ordinaires...
+
+- contre les valeurs ajustées
+- contre les variables explicatives
+- contre des variables omises (pas incluses dans le modèle pour la moyenne)
+- diagrammes de régression partielle
+
+---
+
+### Données `assurance`
+
+On considère un modèle linéaire avec `age`, `sexe`, `region` et une interaction entre `fumeur`/`obese` et `imc`.
+
+- Les diagrammes nous indiquent que le modèles inadéquats, mais les apparences sont parfois trompeuses: 
+ - à cause de valeurs abnormalement élevées (trop grand frais), la moyenne estimée des non-fumeurs est plus grande que la majorité des observations
+ - l'ajustement est bon hormis pour ces valeurs inattendues: cela a des répercussions, notamment pour le diagramme quantile-quantile.
+ - une transformation logarithmique pourrait potentiellement réduire l'impact de ces valeurs, ou alors une régression robuste qui pondère à la baisse les points trop différents.
+
+---
+
+
+.panelset[
+
+## Linéarité
+
+.panel[.panel-name[Sortie **SAS**]
+
+&lt;img src="img/c2/diaggraph_e1.png" width="55%" style="display: block; margin: auto;" /&gt;
+]
+.panel[.panel-name[Code **SAS**]
+
+
+
+```sas
+proc glm data=assurance;
+class fumobese sexe region;
+model frais = fumobese|imc age sexe region / solution ss3;
+output out=residus predicted=vajustees 
+    r=reso rstudent=rsc;
+run;
+
+/* Graphique des résidus ordinaires contre valeurs ajustées */
+proc sgplot data=residus noautolegend;
+scatter y=reso x=vajustees;
+loess y=reso x=vajustees; 
+xaxis label="valeurs ajustées";
+yaxis label="résidus ordinaires";
+run;
+
+```
+]
+]
+
+---
+
+## Linéarité
+
+.panelset[
+.panel[.panel-name[Sortie **SAS** (1)]
+
+&lt;img src="img/c2/diaggraph_e2.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+Plus de structure dans les résidus face à l'indice de masse corporelle.
+
+]
+
+.panel[.panel-name[Sortie **SAS** (2)]
+
+&lt;img src="img/c2/diaggraph_e3.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+Une traîne (linéaire) pour le nombre d'enfants serait nécessaires. Notez que la boîte à moustache pour quatre enfants (anormale) est un artifice d'une faible taille d'échantillon.
+
+]
+.panel[.panel-name[Code **SAS**]
+
+
+
+```sas
+/* Résidus ordinaires contre indice de masse corporelle */
+proc sgpanel data=residus noautolegend;
+panelby fumeur / uniscale=row;
+scatter y=reso x=imc;
+loess y=reso x=imc; 
+rowaxis label="résidus ordinaires";
+colaxis label ="indice de masse corporelle";
+run;
+
+/* Résidus contres variables non incluse*/
+proc sgpanel data=residus noautolegend;
+panelby sexe / uniscale=row;
+vbox  reso / category=enfant;
+scatter  x=enfant y=reso / jitter transparency=0.6;
+colaxis label="nombre d'enfants";
+rowaxis label="résidus ordinaires"; 
+run;
+```
+]
+]
+
+---
+
+## Homoscédasticité
+
+.panelset[
+.panel[.panel-name[Sortie **SAS** (1)]
+
+&lt;img src="img/c2/diaggraph_e4.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+Pas de preuve qu'il y a une traîne dans la variance.
+
+]
+
+.panel[.panel-name[Sortie **SAS** (2)]
+
+&lt;img src="img/c2/diaggraph_e5.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+Pas d'hétéroscédasticité de groupe (mais toujours des frais anormalement élevés inexpliqués qui engendrent de larges résidus).
+]
+
+.panel[.panel-name[Code **SAS**]
+
+
+
+```sas
+data residus;
+set residus;
+arsc = abs(rsc);
+run;
+
+proc sgplot data=residus noautolegend;
+scatter y=arsc x = vajustees;
+loess y=arsc x = vajustees;
+yaxis label = "|résidus studentisés externes|";
+xaxis label = "valeurs ajustées";
+run;
+
+proc sgplot data=residus noautolegend;
+vbox rsc / category=fumobese;
+yaxis label = "résidus studentisés externes";
+xaxis label = "statut fumeur/obésité";
+run;
+```
+]
+]
+
+---
+
+### Diagramme quantile-quantile
+
+
+Pour créer un diagramme quantile-quantile à la mitaine
+
+- trier les données (résidus studentisés externes)
+- calculer les positions théoriques `\(i/(n+1)\)`, `\(i=1, \ldots, n\)`
+- calculer la transformation inverse `\(F^{-1}\{i/(n+1)\}\)`, où `\(F^{-1}\)` est la fonction quantile de la loi postulée. 
+- ajouter des intervalles de confiance ponctuels approximatives (avec des statistiques d'ordre)
+  - `\(U_{(j)} \sim \mathsf{Be}(j, n+1-j)\)`
+  - on calcule les quantiles `\(0.025\)` et `\(0.975\)` de la loi `\(\mathsf{Be}(j, n+1-j)\)`
+  - transformer ces variables à l'échelle Student
+  - éliminer la traîne
+
+---
+
+
+### Normalité
+
+.panelset[
+
+.panel[.panel-name[Sortie **SAS**]
+
+&lt;img src="img/c2/diaggraph_e6.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+
+]
+.panel[.panel-name[Code **SAS** (1)]
+
+
+
+```sas
+data residusqq; 
+set residus;
+keep rsc;
+run;
+
+proc sort data=residusqq; 
+by rsc; 
+run;
+
+data residusqq;
+set residusqq nobs=nobs;
+pp = _N_  / (nobs + 1);
+pplow = quantile("beta", 0.025, _N_, nobs + 1 - _N_);
+pphigh = quantile("beta", 0.975, _N_, nobs + 1 - _N_);
+q = quantile("t", pp, 1329);
+qlow = quantile("t", pplow, 1329);
+qhigh = quantile("t", pphigh, 1329);
+qdet = rsc - q;
+qdethigh = qhigh - q;
+qdetlow = qlow - q;
+run;
+```
+
+]
+.panel[.panel-name[Code **SAS** (2)]
+
+
+```sas
+proc sgplot data=residusqq noautolegend; 
+band x=q upper=qdethigh lower=qdetlow / 
+  fill transparency=.5 legendlabel="intervalles de confiance ponctuels";
+lineparm x=0 y=0 slope=0; 
+scatter x=q y=qdet;
+xaxis label="quantiles théoriques Student" grid; 
+yaxis label="résidus studentisés externes (moins traîne)" grid;
+run;
+```
+]
+]
+
+---
+
+## Diagramme quantile-quantile
+
+- La procédure `univariate` permet de faire un diagramme QQ pour quelques lois, incluant la loi normale.
+- On pourrait utiliser cette dernière en misant sur l'approximation de la loi Student par une loi normale si les degrés de liberté `\(n-p-2\)` est grand.
+
+
+```sas
+/* Histogramme des résidus students et densité */
+proc sgplot data=residus;
+histogram rsc;
+density rsc / type=kernel;
+keylegend / position=bottom;
+run;
+
+proc univariate data=residus noprint;
+qqplot rsc / normal(mu=est sigma=est l=2)
+square;
+run;
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": null,
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"slideNumberFormat": "<div class=\"progress-bar-container\">  <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">  </div> </div>"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
