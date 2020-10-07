@@ -1,0 +1,202 @@
+\documentclass{beamer}
+\usepackage{HECbeamer}
+\usepackage{icomma}
+\newcommand{\AIC}{\textsf{AIC}}
+\newcommand{\BIC}{\textsf{BIC}}
+% \usepackage{pgfpages}
+% \pgfpagesuselayout{4 on 1}[letterpaper, landscape, border shrink=5mm]
+\title[\color{white}{MATH 60604 \S~4a - Modèles linéaires généralisés}]{\texorpdfstring{MATH 60604 \\Modélisation statistique \\ \S~4a - Modèles linéaires généralisés}{MATH 60604 \\Modélisation statistique \\ \S~4a - Modèles linéaires généralisés}}
+\author{Léo Belzile}
+\institute{HEC Montréal\\
+Département de sciences de la décision}
+\date{} 
+
+\begin{document}
+\frame{\titlepage}
+\begin{frame}
+\frametitle{Introduction}
+\bi
+\item Les modèles linéaires ne sont adéquats que pour les variables réponses qui suivent (conditionnellement) une loi normale.
+
+\item Dans plusieurs contextes, les variables réponse $Y$ à disposition sont
+\bi
+\item \alert{binaires}, 
+\item entières, c'est-à-dire des variables de \alert{dénombrement}, 
+\item \alert{continues, mais non-négatives}, 
+\ei
+\item On considère des lois adéquates pour des données binaires, des proportions et des variables de dénombrement, afin de faire de l'inférence basée sur la vraisemblance.
+\ei
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Variables réponses binaires}
+\bi
+\item Si la variable réponse $Y$ vaut soit $0$, soit $1$, on peut postuler une loi \alert{Bernoulli} pour $Y$, soit
+\begin{align*}
+\P{Y=y} = \pi^y (1-\pi)^{1-y}, \quad y=0, 1.
+\end{align*}
+Il en découle que $\E{Y}=\pi$ et $\Va{Y}=\pi(1-\pi)$.
+\item Par convention, les zéros représentent des échecs (non) et les uns des réussites (oui).
+\item Exemples de questions de recherches comprenant une variable réponse binaire:
+\bi
+\item est-ce qu'un client potentiel a répondu favorablement à une offre
+promotionnelle?
+\item est-ce qu'un client est satisfait du service après-vente?
+\item est-ce qu'une firme va faire faillite au cours des trois prochaines années?
+\item est-ce qu'un participant à une étude réussit une tâche?
+\ei
+\ei
+\end{frame}
+
+\begin{frame}
+\frametitle{Variables réponses binaires cumulées}
+Si les données représentent la somme d'événements Bernoulli indépendants, la loi du nombre de réussites $Y$ sur le nombre d'essais $m$ est binomiale avec fonction de masse
+\begin{align*}
+\P{Y=y} = \binom{m}{y}\pi^y (1-\pi)^{m-y}, \quad y=0, 1.
+\end{align*}
+La vraisemblance pour un échantillon $\mathsf{Bin}(m, \pi)$  est (à constante de normalisation près qui ne dépend pas de $\pi$) la même que pour un échantillon aléatoire de $m$ variables Bernoulli indépendantes. L'espérance est $\E{Y}=m\pi$ et la variance $\Va{Y}=m\pi(1-\pi)$. 
+\end{frame}
+\begin{frame}
+\frametitle{Variables de dénombrement}
+\bi
+\item \alert{Si la probabilité d'un événement est \textbf{rare}}, on suppose souvent que $Y$, le nombre de réussites dans un intervalle de temps donné, suit une loi de \alert{Poisson},
+\begin{align*}
+\P{Y=y} = \frac{\exp(-\mu)\mu^y}{y!}, \quad y=0, 1, 2, \ldots
+\end{align*}
+\item Le paramètre $\mu$ de la loi de Poisson est à la fois l'espérance et la variance de la variable,  $\E{Y}=\Va{Y}=\mu$.
+\item Exemples de questions de recherches comprenant une variable réponse de dénombrement: 
+\bi
+\item nombre de réclamations faites par un client d'une compagnie d'assurance
+au cours d'une année.
+\item  nombre d'achats effectués par un client depuis un mois.
+\item nombre de tâches réussies par un participant lors d'une étude.
+\ei
+\ei
+\end{frame} 
+% \begin{frame}
+% \frametitle{Modèles linéaires généralisés}
+% \bi
+% \item Les modèles linéaires
+% généralisés permettent de
+% modéliser adéquatement des variables réponses quelconques (binaires, de dénombrement, positive, continues) en utilisant des lois aléatoires appropriées. 
+% \bi \item La régression
+% linéaire (avec des erreurs normales) est un \alert{cas particulier} des modèles linéaires généralisés.
+% \ei
+% \item Dans ce chapitre, nous allons présenter une introduction aux modèles
+% linéaires généralisés, en portant un intérêt particulier à la régression logistique et Poisson. 
+% \item Nous nous limiterons au cas où les observations sont
+% indépendantes. 
+% \bi 
+% \item Le traitement des données corrélées et longitudinales pour des modèles linéaire généralisés (\alert{modèles linéaires mixtes généralisés}) sont couvertes dans le cours MATH80621.
+% \ei
+% \ei 
+% \end{frame}
+
+
+\begin{frame}
+\frametitle{Notation pour les modèles linéaires généralisés}
+\bi
+\item Le point de départ est le même que pour la régression linéaire:
+\bi
+ 
+\item On dispose
+d'un échantillon d'observations indépendantes
+\begin{align*}
+(Y_i, \mathrm{X}_{i1}, \ldots, \mathrm{X}_{ip}), \quad i=1, \ldots, n
+\end{align*}
+où $Y$ est la variable réponse et $\mathrm{X}_1, \ldots, \mathrm{X}_p$ 
+des variables explicatives supposées connues et fixes (non-aléatoires).
+\item Le but est modéliser la variable réponse en fonction des variables explicatives.
+\ei
+\item On dénote $\mu_i$ la \alert{moyenne} (conditionnelle) de $Y_i$ étant données les variables explicatives,
+\begin{align*}
+\mu_i=\E{Y_i \mid  \mathrm{X}_{i1}, \ldots, \mathrm{X}_{ip}}.
+\end{align*}
+\item On dénote par $\eta_i$ la \alert{combinaison linéaire} des variables explicatives qui servira à modéliser la
+variable réponse, 
+\begin{align*}
+\eta_i=\beta_0 + \beta_1 \mathrm{X}_{i1} + \cdots + \beta_p \mathrm{X}_{ip}.
+\end{align*}
+\ei
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Composantes du modèle linéaire généralisé}
+Trois composantes sont nécessaires pour définir un modèle linéaire
+généralisé
+\bi
+
+\item Une loi de probabilité pour la variable réponse $Y$ qui fait partie de la famille exponentielle (normale, binomiale, Poisson, gamma, \ldots). 
+\item Un prédicteur linéaire $\boldsymbol{\eta} = \mathbf{X}\bbeta$.
+\item Une fonction monotone $g$, appelée \alert{fonction de liaison}, que \alert{relie} la moyenne de $Y_i$ aux variables explicatives, $g(\mu_i)=\eta_i$, d'où
+\begin{small}
+\begin{align*}
+g(\mu_i) & = \eta_i = \beta_0 + \beta_1 \mathrm{X}_{i1} + \cdots + \beta_p \mathrm{X}_{ip} \\
+\quad \Leftrightarrow \quad \mu_i & = g^{-1}(\eta_i) = g^{-1}(\beta_0 + \beta_1 \mathrm{X}_{i1} + \cdots + \beta_p \mathrm{X}_{ip}).
+\end{align*}
+\end{small}
+\ei
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{Fonction de liaison}
+\bi
+\item Dans le modèle de régression linéaire ordinaire, on n'impose pas de contraintes aux valeurs prises par la moyenne $\mu_i$ et $\hat{\mu}_i = \widehat{\eta}_i$ peut prendre des valeurs arbitraires dans l'intervalle $(-\infty, \infty)$. 
+\item En revanche, les moyennes de certaines variables réponses sont contraintes
+\bi
+ 
+\item variables Bernoulli/binomiales: la moyenne $\mu=\pi$ doit être dans l'intervalle $(0, 1)$.
+\item variables Poisson: la moyenne $\mu$ doit être positive.
+\ei
+\item Un choix adéquat de fonction de liaison pour $\mu_i$ permet une transformation de la combinaison linéaire $\eta_i$ de telle sorte qu'aucune contrainte numérique n'est imposée sur les paramètres $\bs{\beta}$.
+\ei
+\end{frame}
+
+\begin{frame}
+\frametitle{Choix de la fonction de liaison}
+Certains choix de fonctions de liaisons facilitent l'interprétation des paramètres ou l'optimisation avec la fonction de vraisemblance.
+\bi
+\item Pour les lois Bernoulli et binomiale, la fonction de liaison la plus utilisée est la fonction  \alert{logit}, 
+\begin{align*}
+\logit(\mu)\coloneqq  
+\ln \left( \frac{\mu}{1-\mu} \right) = \eta \quad \Leftrightarrow \quad \mu = \frac{\exp(\eta)}{1+\exp(\eta)}.
+\end{align*}
+
+\item Pour la loi Poisson, la fonction de liaison canonique est le \alert{logarithme naturel},
+\begin{align*}
+\ln (\mu) = \eta  \quad \Leftrightarrow \quad \mu = \exp(\eta).                                                  \end{align*}
+
+\item Pour la loi normale, la fonction de liaison est la fonction \alert{identité}, donc $\mu = \eta$.
+% In particular, the \textbf{canonical link} function is such that $\theta = \eta$.
+\ei
+\end{frame}
+
+\begin{frame}
+\frametitle{Cas particulier de la régression linéaire}
+\bi
+\item La régression linéaire ordinaire est un cas spécial de régression linéaire généralisée, avec
+\begin{align*}
+Y_i = \beta_0+ \beta_1 \mathrm{X}_{i1}+\ldots+\beta_p \mathrm{X}_{ip} + \varepsilon_i, \qquad (i=1, \ldots, n)
+\end{align*}
+où $\varepsilon_i \simiid \mathsf{No}(0, \sigma^2)$, c'est-à-dire que $\eps_1, \ldots, \eps_n$ sont des variables indépendantes et identiquement distribuées de loi normale avec moyenne $0$ et variance $\sigma^2$.
+\item De façon équivalente, 
+\begin{align*}
+Y_i\mid \mathbf{X}_i \stackrel{\mathsf{ind}}{\sim} \mathsf{No}(\beta_0+ \beta_1 \mathrm{X}_{i1}+\ldots+\beta_p \mathrm{X}_{ip}, \sigma^2)
+\end{align*}
+% \item Thus, we have:
+% \begin{align*}
+% \E{Y_i\mid \mathbf{X}_i}=\beta_0+ \beta_1 \mathrm{X}_{i1} + \cdots + \beta_p \mathrm{X}_{ip}.
+% \end{align*}
+\item On déduit que la régression linéaire est un modèle linéaire généralisé avec
+\bi
+ 
+\item une loi normale pour la réponse et
+\item la fonction identité comme fonction de liaison.
+\ei 
+\ei
+\end{frame} 
+\end{document}
+
+
+
