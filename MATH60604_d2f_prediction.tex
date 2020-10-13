@@ -89,7 +89,7 @@ $Y$ pour un ensemble de variables explicatives $\mathrm{X}_1=x_1, \ldots,\mathrm
 \begin{tcolorbox}[colback=white, colframe=hecblue, title=Code \SASlang pour créer un nouveau jeu de données]
 \begin{verbatim}
 data newdata;
-   set infe.intention(obs=1);
+   set modstat.intention(obs=1);
    do fixation=0 to 6;
       output;
    end;
@@ -105,7 +105,7 @@ run;
 \ei
 \begin{tcolorbox}[colback=white, colframe=hecblue, title=Code \SASlang pour enregistrer la sortie du modèle linéaire]
 \begin{verbatim}
-proc glm data=infe.intention noprint;
+proc glm data=modstat.intention noprint;
 class sexe educ revenu;
 model intention= fixation emotion 
     sexe age revenu educ / ss3 solution;
