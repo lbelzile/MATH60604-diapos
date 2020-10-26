@@ -1,0 +1,138 @@
+\documentclass{beamer}
+\usepackage{HECbeamer}
+\usepackage{icomma}
+\usepackage{numprint}
+\title[\color{white}{MATH 60604 \S~5g - Comparaison de structures de covariance}]{\texorpdfstring{MATH 60604 \\Modélisation statistique \\ \S~5g - Comparaison de structures de covariance}{MATH 60604 \\Modélisation statistique \\ \S~5g - Comparaison de structures de covariance}}
+\author{Léo Belzile}
+\institute{HEC Montréal\\
+Département de sciences de la décision}
+\date{} 
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}[fragile]
+\frametitle{Résumé des modèles de covariance traités}
+\bi
+\item Nous avons vu comment ajuster cinq types de structure de covariance sur les résidus du modèle de régression:
+\bi
+
+\item Une structure d'équicorrélation (\code{cs}) (échangeable): toutes les paires d'observations ont la même corrélation.
+\item Une structure \alert{$\mathsf{AR}(1)$}: la corrélation entre deux observations décroit géométriquement avec le temps écoulé entre les deux. 
+\item Une structure \alert{$\mathsf{ARH}(1)$}: une extension hétérogène du modèle $\mathsf{AR}(1)$, avec la même corrélation mais des variances différentes pour chaque temps.
+\item Une covariance \alert{non structurée}, qui permet une covariance différente pour chaque paire d'observations dans le temps.
+\ei
+\ei
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Sélection de la structure de covariance}
+\begin{center}
+\begin{footnotesize}
+\begin{tabular}{l c c c}
+\toprule 
+\textbf{Modèle} & $-2\ell_{\textrm{reml}}$ & \textbf{AIC} & \textbf{BIC} \\ \midrule
+Indépendance & $ \numprint{776.7}$ & $ \numprint{778.7}$ & $\numprint{782.6}$ \\ 
+Équicorrélation & $\numprint{709.4}$ & $ \numprint{713.4}$ & $\numprint{718.2}$ \\ 
+$\mathsf{AR}(1)$ & $\numprint{681.8}$ & \alert{$\numprint{685.8}$} & \alert{$ \numprint{690.5}$} \\ 
+$\mathsf{ARH}(1)$ & $ \numprint{675.3}$ & $ \numprint{687.3}$ & $ \numprint{701.6}$ \\ 
+Non structurée & $ \numprint{659.3}$ & $ \numprint{689.3}$ & $ \numprint{725.0}$ \\ \bottomrule
+\end{tabular}
+\end{footnotesize}
+\end{center}
+\bi
+\item  Les critères d'information \AIC{} et \BIC{} mène au choix du modèle avec la structure $\mathsf{AR}(1)$. 
+\item Il s'agit d'un modèle parcimonieux (deux paramètres pour la structure de covariance) qui semble bien tenir compte de la corrélation intra-sujet.
+\item Ce qui est rassurant en plus, c'est que peu importe la structure utilisée, les conclusions quant aux effets des variables explicatives sont toujours les mêmes.
+\ei
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Choix de la structure de covariance}
+\bi
+\item Petit détail technique: si on veut comparer des modèles
+avec le \AIC{} ou le \BIC{} et que la méthode d'estimation REML est utilisée, il faut
+absolument que les modèles comparés \alert{contiennent les mêmes variables explicatives} (effets fixes).
+\item Les critères d'information provenant de
+deux modèles ayant des effets fixes différents, estimés par REML, ne sont \textbf{pas} comparables. Par contre, ils sont comparables si on utilise la méthode du maximum de vraisemblance.
+\ei
+\end{frame}
+
+
+
+
+
+
+
+\begin{frame}[fragile]
+\frametitle{Remarques importantes sur les tests d'hypothèses sur la structure de covariance}
+\bi
+\item La plupart du temps, les questions de recherche font référence à des tests d'hypothèses concernant les paramètres de la partie ``moyenne'' du modèle. 
+\item Dans le cas de données corrélées, nous savons maintenant qu'il faut que la partie
+covariance soit modélisée adéquatement afin que l'inférence sur la partie
+moyenne soit valide. 
+\item Procéder en choisissant la structure de covariance selon des critères comme
+le AIC et le BIC est raisonnable. Mais il est aussi possible de faire des
+tests formels sur les paramètres de la structure de covariance.
+\ei
+\end{frame}
+
+\begin{frame}
+\frametitle{Rappel sur les tests de rapport de vraisemblance (REML)}
+
+\bi
+\item Le test compare la log-vraisemblance du modèle complet (sous $\Hy_1$) à celle du modèle restreint emboîté (sous $\Hy_0$).
+\item L'hypothèse nulle est que le modèle restreint est une simplification adéquate du modèle complet.
+\item La statistique du test de rapport de vraisemblance est
+\begin{align*}
+D=2\{\ell_{\textrm{reml}}(\hat{\bs{\theta}})- \ell_{\textrm{reml}}(\hat{\bs{\theta}}_0)\} \end{align*}
+\item Sous $\Hy_0$, $D \stackrel{\cdot}{\sim}\chi^2_k$, où le nombre de degrés de liberté $k$ est la différence du nombre de paramètres des deux modèles. 
+\item On calcule la valeur-$p$ du test à partir de la loi $\chi^2_k$.
+\ei
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{Tests du rapport de vraisemblance pour structures de covariance}
+\bi
+\item Il est possible de tester des hypothèses compliquées à l'aide du test de rapport de vraisemblance.
+\item Par exemple, on peut vérifier s'il est nécessaire de spécifier des variances différentes avec une structure autorégressive $\mathsf{AR}(1)$.
+\item Dans ce cas, on veut tester si le modèle $\mathsf{AR}(1)$ est adéquat ou si le modèle $\mathsf{ARH}(1)$ est préférable.
+\item L'hypothèse nulle est $
+\Hy_0: \sigma_1^2=\sigma_2^2=\cdots=\sigma_5^2$ contre l'alternative qu'au moins deux des variances sont différentes.
+\item Le \alert{modèle complet} est le modèle $\mathsf{ARH}(1)$ ($\Hy_1$) et le \alert{modèle restreint} le modèle $\mathsf{AR}(1)$ ($\Hy_0$).
+\ei
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Statistique du rapport de vraisemblance: $\mathsf{AR}(1)$ versus $\mathsf{ARH}(1)$}
+\bi
+\item Sur la base des sorties précédentes, la différence de log-vraisemblance restreinte $-2\ell_{\textrm{reml}}$ pour ces deux modèles est $681.8-675.3=6.5$.
+\item Il y a \textbf{quatre} paramètres additionnels dans le modèle complet. 
+
+On compare la valeur de la statistique $95$\% quantile d'une variable $\chi^2_4$, soit $9.48$.
+
+\begin{tcolorbox}[colback=white,colframe=hecblue,title=Code \SASlang{} pour calculer la valeur-$p$ avec la loi nulle $\chi^2_4$]
+\begin{verbatim}
+data pval;
+pval=1-CDF('CHISQ', 6.5, 4);
+run;
+proc print data=pval;
+run;
+\end{verbatim}
+\end{tcolorbox}
+\item On obtient une valeur-$p$ de $0.165$. On ne rejette pas $\Hy_0$ --- le modèle $\mathsf{AR}(1)$ est une simplification adéquate du modèle $\mathsf{ARH}(1)$.
+\ei
+\end{frame}
+
+\begin{frame}
+\frametitle{Remarques finales}
+\bi
+\item On a utilisé la méthode du maximum de vraisemblance restreinte (REML) pour estimer les paramètres de variance (option par défaut de \code{proc mixed}). 
+\item Plusieurs modèles considérés sont emboîtés, donc on peut faire des tests pour établir des comparaisons.
+\bi \item par exemple, l'indépendance $\prec$ $\mathsf{AR}(1)$$\prec$ $\mathsf{ARH}(1)$ $\prec$ non structurée.
+\ei
+\item L'utilisation des critères \AIC{} et \BIC{} pour comparer ces modèles est valide \textbf{tant que} la structure de la moyenne inclut les \textbf{même} variables explicatives, comme ce fut le cas dans tous les modèles ajustés dans ces diapositives.
+\item Si on veut comparer des modèles qui incluent des variables explicatives différentes, il faudrait utiliser la méthode du maximum de vraisemblance et non pas la méthode REML.
+\ei
+\end{frame}
+\end{document}
