@@ -1,0 +1,161 @@
+
+\documentclass{beamer}
+\usepackage{HECbeamer}
+\usepackage{icomma}
+\usepackage{numprint}
+\title[\color{white}{MATH 60604 \S~6c - Modèles linéaires mixtes}]{\texorpdfstring{MATH 60604 \\Modélisation statistique \\ \S~6c - Modèles linéaires mixtes}{MATH 60604 \\Modélisation statistique \\ \S~6c - Modèles linéaires mixtes}}
+\author{Léo Belzile}
+\institute{HEC Montréal\\
+Département de sciences de la décision}
+\date{}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}
+\frametitle{Introduction aux modèles à effets aléatoires}
+Les modèles à effets aléatoires permettent d'inclure une corrélation intra-groupe et de faire des prédictions par groupe en plus d'inclure un effet de groupe au niveau de la population.
+\bi \item La principale caractéristique des \alert{modèles linéaires mixtes} est de permettre l'inclusion d'\alert{effets aléatoires},  soit des paramètres qui varient d'un groupe à l'autre (ou d'une personne à l'autre pour les données répétées).
+\item Bien que l'on permettre à chaque groupe d'avoir un effet différent, la moyenne de ces effets est nulle.
+\ei
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Modèles avec effets aléatoires}
+\bi
+% \item  Tel que mentionné plus tôt, les modèles mixtes permettent d'incorporer des effets aléatoires.
+\item Lorsque une variable explicative est modélisée à l'aide d'un effet aléatoire, on suppose que \alert{l'effet total de cette variable est une combinaison de}:
+\be
+\item un \alert{effet commun à toute la population}
+\item un \alert{effet propre aux sujets d'un groupe}.
+\ee
+\item Par exemple, dans le cas de mesures répétées sur des individus, l'effet d'une variable pourrait être formé d'un effet commun à tous les individus de la population et d'un effet unique et différent pour chaque individu.
+\item Dans notre exemple sur la mobilisation des employés d'une unité, l'effet de l'ancienneté pourrait être formé d'un effet commun à tous les employés de l'entreprise et d'un effet unique et différent pour chaque unité.
+\ei
+\end{frame}
+
+\begin{frame}
+ \frametitle{Modèle linéaire mixte (formulation hiérarchique)}
+Le modèle linéaire mixte s'écrit
+ \begin{align*}
+  \bs{Y}_i \mid \bs{\mathcal{B}}_i =\bs{b}_i &\sim \mathsf{No}_{n_i}\left( \mathbf{X}_i \bs{\beta} + \mathbf{Z}_i\bs{b}_i, \mathbf{R}_i\right) \\
+  \bs{\mathcal{B}}_i & \sim \mathsf{No}_{q}( \bs{0}_q, \bs{\Omega})
+ \end{align*}
+
+ \bi \item 
+ La réponse du groupe $i$, $\bs{Y}_i$ suit une loi normale conditionnellement aux \textbf{effets aléatoires} $  \bs{\mathcal{B}}_i$.
+ \item 
+On appelle désormais les coefficients $\bs{\beta}$ associés à la matrice du modèle $\mathbf{X}_i$ des \textbf{effets fixes}.
+ \ei 
+\end{frame}
+
+\begin{frame}\frametitle{Modèle linéaire mixte: effets fixes}
+
+
+On peut écrire le modèle linéaire mixte comme
+\begin{align*}
+[\bs{Y}_i \mid \bs{\mathcal{B}}_i=\bs{b}_i]= \mathbf{X}_i \bs{\beta} + \mathbf{Z}_i \bs{b}_i + \bs{\eps}_i, \qquad i = 1, \ldots, m.
+\end{align*} 
+où
+\bi
+\item $\bs{Y}_i=(Y_{i1},\ldots,Y_{in_i})^{\top}$ est le vecteur de taille $n_i$ contenant les réponses du groupe $i$.
+
+\item $\mathbf{X}_i$ est la matrice $n_i \times (p+1)$ de variables explicatives du groupe $i$, dont la $i$e ligne est $\mathbf{X}_{ij}=(1,\mathrm{X}_{ij1},\ldots,\mathrm{X}_{ijp})^{\top}$. 
+\bi 
+\item La première colonne correspond à l'ordonnée à l'origine (vecteur de uns).
+\item Les autres colonnes de $\mathbf{X}_i$ encodent chacune une variable explicative.
+\ei
+\item $\bs{\beta}$ est le $(p+1)$ vecteur d'effets \textbf{fixes}.
+\ei
+\end{frame}
+
+\begin{frame}\frametitle{Modèles linéaires mixtes: effets aléatoires}
+On peut écrire le modèle linéaire mixte comme
+\begin{align*}
+[\bs{Y}_i \mid \bs{\mathcal{B}}_i=\bs{b}_i]= \mathbf{X}_i \bs{\beta} + \mathbf{Z}_i b_i + \bs{\eps}_i, \qquad i = 1, \ldots, m.
+\end{align*} 
+où
+\bi
+\item $\mathbf{Z}_i$ est une matrice $n_i \times q$ qui contient un \textbf{sous-ensemble} des colonnes de $\mathbf{X}_i$. 
+\bi \item Les colonnes de $\mathbf{Z}_i$ sont associées aux \textbf{effets aléatoires}. 
+\item S'il n'y a pas d'effet aléatoire, $q=0$ et on recouvre le modèle linéaire usuel.
+\ei
+\item  $\bs{\mathcal{B}}_i=\bs{b}_i$ est un $q$ vecteur d'effets aléatoires propres au groupe $i$
+\item $\bs{\eps}_i$ est un $n_i$ vecteur d'erreurs pour le groupe $i$.
+\ei
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Forme générale pour les modèles mixtes}
+Dans le modèle linéaire mixte, à la fois $\bs{\mathcal{B}}_i$ et $\bs{\eps}_i$ sont des vecteurs aléatoires. On suppose que 
+\bi
+\item les effets aléatoires $\bs{\mathcal{B}}_i$ et $\bs{\mathcal{B}}_j$ $(i \neq j)$ sont indépendants entre eux.
+\item les effets aléatoires $\bs{\mathcal{B}}_i$ sont indépendants des erreurs $\bs{\eps}_j$.
+\item les aléas $\bs{\eps}_i$ sont indépendants les uns des autres et ne dépendent pas des variables explicatives.
+\item à la fois $\bs{\mathcal{B}}_i$ et $\bs{\eps}_i$ ont espérance zéro \[\E{\bs{\mathcal{B}}_i}=\bs{0}_{n_i}, \qquad \E{\bs{\eps}_i \mid \mathbf{X}_i}=\bs{0}_{n_i}\]
+\ei
+\end{frame}
+\begin{frame}
+\frametitle{Moyenne et variance conditionnelles et marginales}
+On spécifie des modèles de covariance pour les effets aléatoires et les erreurs,
+\begin{align*}
+\Co{\bs{\mathcal{B}}_i}=\bs{\Omega}, \quad \Co{\bs{\eps}_i}=\mathbf{R}_i, \quad i=1, \ldots, m
+\end{align*}
+La moyenne et la variance \alert{conditionnelles} de $\bs{Y}_i$ sont
+\begin{align*}
+\E{\bs{Y}_i \mid \mathbf{X}_i,\bs{\mathcal{B}}_i=\bs{b}_i} = \mathbf{X}_i \bs{\beta} + \mathbf{Z}_i \bs{b}_i, \qquad \Co{\bs{Y}_i \mid \mathbf{X}_i, \bs{\mathcal{B}}_i=\bs{b}_i} = \mathbf{R}_i
+\end{align*}
+tandis que la moyenne et la variance \alert{marginales} de $\bs{Y}_i$ sont
+\begin{align*}
+\E{\bs{Y}_i \mid \mathbf{X}_i} = \mathbf{X}_i \bs{\beta}, \qquad \Co{\bs{Y}_i \mid \mathbf{X}_i} = \bs{\Sigma}_i=\mathbf{Z}_i \bs{\Omega}\mathbf{Z}_i^\top+\mathbf{R}_i.
+\end{align*}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{Paramètres d'un modèle mixte}
+Les \alert{paramètres} du modèle à estimer sont
+\bi \item le vecteur d'effets fixes, $\boldsymbol{\beta}$
+\item les paramètres $\boldsymbol{\psi}$ de la covariance marginale $\bs{\Sigma}$ de $\bs{Y}$, qui découle de la structure de covariance  des aléas et des effets aléatoires.
+\ei
+
+\end{frame}
+\begin{frame}
+\frametitle{Effets groupes aléatoires}
+\bi
+\item Avec un modèle linéaire mixte,la moyenne conditionnelle $\E{Y_{ij}\mid \mathbf{X}_i, \bs{b}_i}$  peut être interprétée comme une \alert{prédiction} de la valeur de $Y_{ij}$ après avoir pris en compte les effets spécifiques à un groupe.
+\item Quand on ajoute un effet aléatoire pour une variable groupe, on peut toujours estimer l'effet de variables fixes dans ce groupe.
+\ei
+\end{frame}
+
+\begin{frame}{Prédiction}
+\bi
+\item On peut prédire $\bs{\mathcal{B}}_i$ par sa moyenne conditionnelle sachant $\bs{Y}_i$,
+\begin{align*}
+\E{\bs{\mathcal{B}}_i \mid  \bs{Y}_i}&=\bs{\Omega}\mathbf{Z}_i^\top \bs{\Sigma}_i^{-1}(\bs{Y}_i-\mathbf{X}_i\bs{\beta})
+\shortintertext{où }
+\bs{\Sigma}_i&=\mathbf{Z}_i \bs{\Omega}\mathbf{Z}_i^\top+\mathbf{R}_i.
+\end{align*}
+
+\item On peut remplacer ($\bs{\psi}, \bs{\beta})$ par leurs estimés $(\widehat{\bs{\psi}}, \widehat{\bs{\beta}})$ pour obtenir une prédiction de l'effet aléatoire
+\begin{align*}
+\hat{\bs{b}}_i= \hat{\bs{\Omega}}\mathbf{Z}_i^\top \hat{\bs{\Sigma}}_i^{-1}(\bs{Y}_i-\mathbf{X}_i\hat{\bs{\beta}})
+\end{align*}
+\ei
+\end{frame}
+
+
+\begin{frame}
+ \frametitle{Effet fixe ou aléatoire?}
+ \bi \item Il n'y a pas de consensus sur la définition d'effets fixes et aléatoires\ldots 
+ \item De manière générale, la différence entre les deux est
+ \bi 
+%  \item At the population level, we assume that the average random effect is zero (or else captured by a fixed effect coefficient).
+ \item les \textbf{effets fixes}  sont utilisés quand on a peu de groupes et beaucoup de valeurs au sein de chaque groupe. On s'intéresse à l'effet au sein du groupe (
+ $m$ petit, $n_i$ grands).
+ \item les \textbf{effets aléatoires} sont employés dans les cas de figure où il y a suffisamment de niveaux et de variabilité pour estimer de manière fiable la variance de l'effet aléatoire; on ne s'intéresse pas au niveau du groupe ($m$ grand, $n_i$ petit, variabilité).
+ \ei
+%  \item Tester si un effet aléatoire est présent revient à tester si la variable de l'effet aléatoire $\sigma^2_b=0$; c'est un test d'hypothèse pour lequel la loi nulle n'est pas standard \ldots 
+ \ei
+\end{frame}
+
+\end{document}
