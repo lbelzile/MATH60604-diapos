@@ -43,7 +43,7 @@ Département de sciences de la décision}
 
 Pour $T$ continue${}^*$, la fonction de risque cumulative est
 \begin{align*}
-H(t) = \int_{0}^{t} h(u) \d u = \int_0^t \frac{f(u)}{1-F(u)}\d u = -\ln\{S(t)\}
+H(t) = \int_{0}^{t} h(u) \d u = \int_0^t \frac{f(u)}{S(u)}\d u = -\ln\{S(t)\}
 \end{align*}
 et donc on peut écrire la fonction de survie  
 \begin{align*}
@@ -51,7 +51,7 @@ S(t) = \exp\{-H(t)\}.
 \end{align*}
 
 
-On peut aussi écrire la log-vraisemblance en terme de la fonction de risque (cumulative)
+On peut aussi écrire la log vraisemblance en terme de la fonction de risque (cumulative)
 \begin{align*}
 \ell(\bs{\theta}) = \sum_{i=1}^n \{\delta_i \ln h(t_i; \bs{\theta}) - H(t_i; \bs{\theta})\}
 \end{align*}
@@ -106,7 +106,7 @@ Dans le modèle à risques proportionnels, la fonction de risque est
 \end{align*}
 où
 \bi \item la fonction de risque de base, $h_0(t)$ est le seul terme de droite qui varie dans le temps.
-\item l'hypothèse dite de \alert{risques proportionnels} est que le rapport $h(t; \bs{x}_i)/h(t; \bs{x}_j)$ est constant peut importe la valeur de $t$.
+\item l'hypothèse dite de \alert{risques proportionnels} est que le rapport $h(t; \mathbf{x}_i)/h(t; \mathbf{x}_j)$ est constant peut importe la valeur de $t$.
 \item l'interprétation des effets des variables explicatives est simplifiée, parce que ces effets ne varient pas avec le temps.
 \item ce postulat est très restrictif et doit être validé en pratique, mais il est particulièrement commode pour les dérivations.
 \ei
@@ -141,21 +141,22 @@ On considère
 \end{frame}
 \begin{frame}
  \frametitle{Fonction de vraisemblance du modèle de Cox}
- Soit $h_j = h_0(t_j)$ et $g_i=\exp(\mathbf{x}_i \bs{\beta})$. La vraisemblance est
+ Soit $h_j = h_0(t_j)$ et $g_i=\exp(\mathbf{x}_i \bs{\beta})$. La log vraisemblance est
  \begin{align*}
-  \ell(\bs{h}, \bs{\beta}) &= \sum_{i=1}^n \left\{ \delta_i \ln (g_ih_i)-g_iH_0(t_j)\right\} 
-  \\& =  \sum_{i=1}^n \left\{ \delta_i \ln g_i + \delta_i \ln h_i -h_i \sum_{j \in \mathcal{R}_i}g_j\right\} 
+  \ell(\bs{h}, \bs{\beta}) &= \sum_{i=1}^n \left\{ \delta_i \ln \{\exp(\mathbf{x}_i \bs{\beta})h_i\}-\exp(\mathbf{x}_i \bs{\beta})H_0(t_j)\right\} 
+  \\& =  \sum_{i=1}^n \left\{ \delta_i \mathbf{x}_i \bs{\beta} + \delta_i \ln h_i -h_i \sum_{j \in \mathcal{R}_i}\exp(\mathbf{x}_j \bs{\beta})\right\} 
  \end{align*}
-Puisqu'on s'intéresse principalement aux effets des variables explicatives $\mathbf{X}$, on considère les paramètres $h_1,\ldots, h_D$ comme des paramètres de nuisance.
-
-Si $\bs{\beta}$ est fixe, le maximum de vraisemblance de $h_i$ est $\widehat{h}_i = \delta_i/\sum_{j \in \mathcal{R}_i} g_j$.
-Ce estimé est positif seulement si $\delta_i=1$ (temps de défaillance observé).
+\bi 
+\item Puisqu'on s'intéresse principalement aux effets des variables explicatives $\mathbf{X}$, on considère les paramètres $h_1,\ldots, h_D$ comme des paramètres de nuisance.
+\item Si $\bs{\beta}$ est fixe, le maximum de vraisemblance de $h_i$ est $\widehat{h}_i = \delta_i/\sum_{j \in \mathcal{R}_i} \exp(\mathbf{x}_j \bs{\beta})$.
+\item Ce estimé est positif seulement si $\delta_i=1$ (temps de défaillance observé).
+\ei 
 \end{frame}
 \begin{frame}
  \frametitle{Vraisemblance profilée du modèle de Cox}
  On peut ainsi dériver la log vraisemblance profilée pour $\bs{\beta}$, à savoir
  \begin{align*}
-  \ell_{\mathrm{p}}(\bs{\beta}) = \max_{\bs{h}}  \ell(\bs{h}, \bs{\beta})  = \sum_{i=1}^n \delta_i \ln \left( \frac{\exp(\mathrm{x}_i\bs{\beta})}{\sum_{j \in \mathcal{R}_i}\exp(\mathrm{x}_j\bs{\beta})}\right)
+  \ell_{\mathrm{p}}(\bs{\beta}) = \max_{\bs{h}}  \ell(\bs{h}, \bs{\beta})  = \sum_{i=1}^n \delta_i \ln \left( \frac{\exp(\mathbf{x}_i\bs{\beta})}{\sum_{j \in \mathcal{R}_i}\exp(\mathbf{x}_j\bs{\beta})}\right)
  \end{align*}
  Il suffit alors de maximiser $\ell_{\mathrm{p}}(\bs{\beta})$. 
 Même si ce modèle a un nombre de paramètres qui excède le nombre d'observations (!), $\ell_{\mathrm{p}}(\bs{\beta})$ se comporte à toute fin pratique comme une vraisemblance ordinaire. 
@@ -172,9 +173,9 @@ La situation est plus complexe s'il y a des doublons, mais les ajustements sont 
 \end{frame}
 
 \begin{frame}
- Une fois les estimés du maximum de vraisemblance $\widehat{\bs{\beta}}$ recouvrés, on peut obtenir la fonction de risque cumulative et la fonction de survie de base
+ Une fois les estimateurs du maximum de vraisemblance $\widehat{\bs{\beta}}$ recouvrés, on peut obtenir la fonction de risque cumulative estimée
  \begin{align*}
-  \widehat{H}_0(t) &= \sum_{i: t_i \leq t} \frac{\delta_i}{\sum_{j \in \mathcal{R}_i} \exp(\mathrm{x}_j\widehat{\bs{\beta}})},
+  \widehat{H}_0(t) &= \sum_{i: t_i \leq t} \frac{\delta_i}{\sum_{j \in \mathcal{R}_i} \exp(\mathbf{x}_j\widehat{\bs{\beta}})},
   \intertext{d'où l'estimé de la fonction de survie pour un individu avec covariables $\mathbf{x}$}
   \widehat{S}(t; \mathbf{x}) &= \exp\left\{-\exp(\mathbf{x}\widehat{\bs{\beta}})\widehat{H}_0(t)\right\}
  \end{align*}
@@ -220,20 +221,20 @@ La situation est plus complexe s'il y a des doublons, mais les ajustements sont 
 \item Prenons deux individus qui sont presque identiques, sauf que leurs valeurs pour la variable $\mathrm{X}_j$ diffère par une unité. 
 \begin{itemize}
 \vp \vp
-\item Pour l'individu $i$ avec $\mathrm{X}_{ij}=\mathrm{x}_j+1$, la fonction de risque est
+\item Pour l'individu $i$ avec $\mathrm{X}_{ij}=\mathbf{x}_j+1$, la fonction de risque est
 \begin{align*}
-h(t; \mathbf{x}_i) = h_0(t) \exp(\beta_0 + \beta_1 \mathrm{x}_1 + \cdots + \beta_j (\mathrm{x}_j+1)+\cdots + \beta_p \mathrm{x}_p)
+h(t; \mathbf{x}_i) = h_0(t) \exp(\beta_1 \mathrm{x}_1 + \cdots + \beta_j (\mathrm{x}_j+1)+\cdots + \beta_p \mathrm{x}_p)
 \end{align*}
-\item Pour l'individu $k$ avec $\mathrm{X}_{kj}=\mathrm{x}_j+1$, la fonction de risque est
+\item Pour l'individu $k$ avec $\mathrm{X}_{kj}=\mathbf{x}_j+1$, la fonction de risque est
 \begin{align*}
-h(t; \mathbf{x}_k) = h_0(t) \exp(\beta_0 + \beta_1 \mathrm{x}_1 + \cdots + \beta_j \mathrm{x}_j+\cdots + \beta_p \mathrm{x}_p)
+h(t; \mathbf{x}_k) = h_0(t) \exp(\beta_1 \mathrm{x}_1 + \cdots + \beta_j \mathrm{x}_j+\cdots + \beta_p \mathrm{x}_p)
 \end{align*}
 \end{itemize}
 \item Le \alert{rapport} des fonctions de risque  est
 \begin{align*}
 \frac{h(t; \mathbf{x}_k)}{h(t; \mathbf{x}_i)} &= 
-% \frac{h_0(t) \exp(\beta_0 + \beta_1 \mathrm{x}_1 + \ldots + \beta_j (\mathrm{x}_j+1)+\ldots + \beta_p \mathrm{x}_p)}{h_0(t) \exp(\beta_0 + \beta_1 \mathrm{x}_1 + \ldots + \beta_j \mathrm{x}_j+\ldots + \beta_p \mathrm{x}_p)} \\
-% &= \frac{\exp(\beta_j(\mathrm{x}_j+1)}{\exp(\beta_j \mathrm{x}_j)} \\ &=
+% \frac{h_0(t) \exp(\beta_1 \mathbf{x}_1 + \ldots + \beta_j (\mathbf{x}_j+1)+\ldots + \beta_p \mathbf{x}_p)}{h_0(t) \exp( \beta_1 \mathbf{x}_1 + \ldots + \beta_j \mathbf{x}_j+\ldots + \beta_p \mathbf{x}_p)} \\
+% &= \frac{\exp(\beta_j(\mathbf{x}_j+1)}{\exp(\beta_j \mathbf{x}_j)} \\ &=
  \exp(\beta_j)
 \end{align*}
 \end{itemize}
@@ -243,7 +244,7 @@ h(t; \mathbf{x}_k) = h_0(t) \exp(\beta_0 + \beta_1 \mathrm{x}_1 + \cdots + \beta
 \frametitle{Rapport de risque}
 \begin{itemize}
 \item Pour chaque augmentation d'une unité pour la variable $\mathrm{X}_j$, la fonction de risque sera \alert{multipliée} par un facteur $\exp(\beta_j)$, \textit{ceteris paribus}.
-\item La quantité $\exp(\beta_j)$ est appelée le \alert{rapport de risques}.
+% \item La quantité $\exp(\beta_j)$ est appelée le \alert{rapport de risques}.
 % (``hazard ratio'' ou HR), car elle représente le rapport des taux de risques. 
 \begin{itemize}
 \vp \vp
@@ -292,11 +293,12 @@ Le fichier \texttt{melanome} contient des données de survie pour des patients a
 
 { \footnotesize
 \begin{itemize}
+\itemsep0em 
 \item \code{temps}: temps de survie (en jours) depuis l'opération 
 \item \code{statut}: \code{1} si le patient est mort, \code{0} si le temps est censuré
 \item \code{sexe}: sexe du patient, soit \code{1} pour les hommes et \code{0} pour les femmes
 \item \code{age}: l'âge (an années) au moment de l'opération
-\item \code{annee}: l'année de l'opération
+% \item \code{annee}: l'année de l'opération
 \item \code{epaisseur}: l'épaisseur (en mm) de la tumeur
 \item \code{ulcere}: variable indicatrice, \code{1} en cas d'ulcération, \code{0} sinon.
 \end{itemize}
@@ -307,7 +309,7 @@ Le fichier \texttt{melanome} contient des données de survie pour des patients a
 \begin{frame}
 \frametitle{Statistiques descriptives pour données \code{melanome}}
 \begin{center}
-\includegraphics[width = 0.5\textwidth]{img/c7/diapos7e10}
+\includegraphics[width = 0.7\textwidth]{img/c7/diapos7e10}
 \includegraphics[width = 0.5\textwidth]{img/c7/diapos7e09}
 \end{center}
 \end{frame}
@@ -339,7 +341,7 @@ run;
 \includegraphics[width = 0.5\textwidth]{img/c7/diapos7e13}
 \end{center}
 {\footnotesize
-La sortie inclut la valeur de la log-vraisemblance avec et sans variables explicatives, et les tests usuels pour $\Hy_0: \bs{\beta}=\bs{0}_p$ versus $\Hy_a: \bs{\beta} \neq \bs{0}_p$.
+La sortie inclut la valeur de la log vraisemblance avec et sans variables explicatives, et les tests usuels pour $\Hy_0: \bs{\beta}=\bs{0}_p$ versus $\Hy_a: \bs{\beta} \neq \bs{0}_p$.
 
 }
 \end{frame}
@@ -348,7 +350,7 @@ La sortie inclut la valeur de la log-vraisemblance avec et sans variables explic
 \frametitle{Coefficients estimés du modèle de Cox}
 \vp \vp
 \begin{center}
-\includegraphics[width = 0.8\textwidth]{img/c7/diapos7e14}
+\includegraphics[width = 0.9\textwidth]{img/c7/diapos7e14}
 \end{center}
 % 
 
@@ -358,7 +360,7 @@ La sortie inclut la valeur de la log-vraisemblance avec et sans variables explic
 \frametitle{Interprétation}
 \begin{itemize}
 \item Pour la variable \code{sexe}, $\exp(\widehat{\beta}_1)=1.542$ représente le rapport de risque entre un homme et une femme du même âge, avec la même épaisseur de tumeur et le même état d'ulcération. Ainsi, le taux de risque pour les hommes est $1.542$ fois celui pour les femmes, lorsque toutes les autres variables restent inchangées.
-\item Pour la variable \code{epaisseur}, $\exp(\widehat{\beta}_3)=1.115$. Pour chaque augmentation de 1mm de l'épaisseur de la tumeur, le taux de risque augmente d'un facteur de $1.115$ (ou 11.5\%), lorsque toutes les autres variables restent inchangées. 
+\item Pour la variable \code{epaisseur}, $\exp(\widehat{\beta}_3)=1.115$. Pour chaque augmentation de $1$mm de l'épaisseur de la tumeur, le taux de risque augmente d'un facteur de $1.115$ (ou $11.5$\%), lorsque toutes les autres variables restent inchangées. 
 \end{itemize}
 \end{frame}
 % 

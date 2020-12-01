@@ -29,7 +29,7 @@ On considère $T$ une variable aléatoire continue et un échantillon de taille 
 %\item Suppose we have $n$ subjects, for which we either observe the time until the event, or a (right) censored time.
 \item Supposons qu'il y a $D$ temps distincts de défaillance. 
 \item Soit $0 \leq t_1 < t_2 < \cdots < t_D$ ces $D$ temps en ordre croissant. 
-\item Soit $r_j$ le nombre d'individus \emph{à risque} d'expérimenter l'événement au temps $t_j$ . 
+\item Soit $r_j$ le nombre d'individus \emph{à risque} d'expérimenter l'événement au temps $t_j$. 
 \bi
 \item C'est-à-dire, ces individus n'ont toujours pas expérimenté l'événement (et n'ont pas été censuré) avant le temps $t_j$. 
 \item Donc, $r_j$ est le nombre de survivants juste avant le temps $t_j$ qui sont à risques d'expérimenter l'événement au temps $t_j$.
@@ -62,7 +62,7 @@ L'estimateur de Kaplan--Meier  est \alert{non-paramétrique},
 \item 
 Les survivants au temps $t_j$ contributent $1-h_j$.
 \item 
-On peut donc écrire la vraisemblance comme
+On peut donc écrire la log vraisemblance comme
 \begin{align*}
  \ell(\bs{h}) = \sum_{j=1}^D \{ d_j \ln(h_j) + (r_j-d_j)\ln(1-h_j)\},
 \end{align*}
@@ -107,7 +107,7 @@ Intuition: $d_j/r_j$ représente la probabilité conditionnelle de survivre jusq
 {
 \footnotesize En pratique, l'utilisation de l'estimateur de Kaplan--Meier avec si peu de données est déconseillée. La qualité de l'approximation dépend fortement du nombre d'observations (correct si $n \gg 1000$).
 
-Les observations censurées fournissent beaucoup moins d'observations que les temps de défaillance observés.
+Les observations censurées fournissent beaucoup moins d'information que les temps de défaillance observés.
 
 }
 \end{frame}
@@ -126,7 +126,7 @@ run;
 }
 \end{tcolorbox}
 { \footnotesize 
-L'argument \code{time} indique la variable de temps $T$ (\code{temps}) et l'indicateur de censure,  incluant la valeur de référence pour les observations censurées à droite (\code{mort=0})
+L'argument \code{time} indique la variable de temps $T_i$ (\code{temps}) et l'indicateur de censure $\delta_i$,  incluant la valeur de référence pour les observations censurées à droite (\code{mort=0})
 
 }
 \end{frame}
@@ -187,7 +187,7 @@ La base de données \code{allaitement} contient des données provenant de l'Enqu
 
 \end{itemize}
 \begin{center}
-\includegraphics[width = 0.5\textwidth]{img/c7/diapos7e06}
+\includegraphics[width = 0.5\textwidth]{img/c7/diapos7e09}
 \end{center}
 % 
 % \item[] \tiny{Ces données proviennent de l'Enquête longitudinale nationale sur les jeunes, tels qu'illustrés dans le livre \emph{Survival Analysis: Techniques for Censored and Truncated Data} par John P. Klein \& Melvin L. Moeschberger}
@@ -237,7 +237,7 @@ La base de données \code{allaitement} contient des données provenant de l'Enqu
 \begin{itemize}
  \item C'est-à-dire, le temps médian $t_M$ est tel que $50\%$ des individus survivent jusqu'au temps $t_M$. 
 \end{itemize}
- On peut facilement trouver la médiane du temps de survie en cherchant le temps $t$ o\`u la ligne horizontale $S(t) = 0.5$ croise la courbe de survie. 
+ On peut facilement trouver la médiane du temps de survie en cherchant le temps $t$ o\`u la ligne horizontale $\widehat{S}(t) = 0.5$ croise la courbe de survie. 
 \begin{center}
 \includegraphics[width = 0.7\textwidth]{img/c7/diapos7e07}
 \end{center}
@@ -270,7 +270,7 @@ Pour une variable aléatoire positive, $T>0$, on peut démontrer que
 On peut estimer l'espérance du temps de survie $\E{T}$ en calculant l'aire sous la courbe de survie estimée $\widehat{S}(t)$. 
 \begin{itemize}
 \item Par exemple, le temps de survie moyen pour les données d'allaitement est $16.89$ semaines avec erreur-type $0.614$ semaines.
-\item Si le temps observé le plus long est \alert{censuré}, la courbe de survie estimée $\widehat{S}(t)$ va atteindre un plateau et ne descendra jamais à $0$.
+\item Si le temps observé le plus long est \alert{censuré}, la courbe de survie estimée $\widehat{S}(t)$ va atteindre un plateau et ne descendra jamais à $0$. L'aire sous la courbe est infinie.
 \item Dans ce cas, on peut plutôt estimer le temps de survie moyen limité: $\E{\min\{T,\tau\}}$ pour une valeur choisie $\tau$. C'est-à-dire, nous calculerons le temps de survie moyen comme si la courbe descendait à $0$ au temps $\tau$ (option \code{rmst} dans \SASlang{}).
 \end{itemize} 
 \end{frame}
