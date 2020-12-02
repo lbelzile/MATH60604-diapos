@@ -221,13 +221,13 @@ La situation est plus complexe s'il y a des doublons, mais les ajustements sont 
 \item Prenons deux individus qui sont presque identiques, sauf que leurs valeurs pour la variable $\mathrm{X}_j$ diffère par une unité. 
 \begin{itemize}
 \vp \vp
-\item Pour l'individu $i$ avec $\mathrm{X}_{ij}=\mathbf{x}_j+1$, la fonction de risque est
+\item Pour l'individu $i$ avec $\mathrm{X}_{ij}=\mathrm{x}_j$, la fonction de risque est
 \begin{align*}
-h(t; \mathbf{x}_i) = h_0(t) \exp(\beta_1 \mathrm{x}_1 + \cdots + \beta_j (\mathrm{x}_j+1)+\cdots + \beta_p \mathrm{x}_p)
+h(t; \mathbf{x}_i) = h_0(t) \exp(\beta_1 \mathrm{x}_1 + \cdots + \beta_j \mathrm{x}_j+\cdots + \beta_p \mathrm{x}_p)
 \end{align*}
-\item Pour l'individu $k$ avec $\mathrm{X}_{kj}=\mathbf{x}_j+1$, la fonction de risque est
+\item Pour l'individu $k$ avec $\mathrm{X}_{kj}=\mathrm{x}_j+1$, la fonction de risque est
 \begin{align*}
-h(t; \mathbf{x}_k) = h_0(t) \exp(\beta_1 \mathrm{x}_1 + \cdots + \beta_j \mathrm{x}_j+\cdots + \beta_p \mathrm{x}_p)
+h(t; \mathbf{x}_k) = h_0(t) \exp(\beta_1 \mathrm{x}_1 + \cdots + \beta_j (\mathrm{x}_j+1)+\cdots + \beta_p \mathrm{x}_p)
 \end{align*}
 \end{itemize}
 \item Le \alert{rapport} des fonctions de risque  est
@@ -310,7 +310,7 @@ Le fichier \texttt{melanome} contient des données de survie pour des patients a
 \frametitle{Statistiques descriptives pour données \code{melanome}}
 \begin{center}
 \includegraphics[width = 0.7\textwidth]{img/c7/diapos7e10}
-\includegraphics[width = 0.5\textwidth]{img/c7/diapos7e09}
+\includegraphics[width = 0.5\textwidth]{img/c7/diapos7e11}
 \end{center}
 \end{frame}
 
@@ -325,7 +325,7 @@ h(t) = h_0(t) \exp( \beta_1 \code{sexe} + \beta_2 \code{age} + \beta_3 \code{epa
 \begin{tcolorbox}[colback=white,colframe=hecblue,title=Code \SASlang{} pour le modèle à risque proportionnel]
 {\footnotesize 
 \begin{verbatim}
-prod phreg data=modstat.melanome;
+proc phreg data=modstat.melanome;
 model temps*statut(0) = sexe age epaisseur ulcere / ties=exact;
 run;
 \end{verbatim}
