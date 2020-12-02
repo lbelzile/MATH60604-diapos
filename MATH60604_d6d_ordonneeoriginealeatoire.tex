@@ -22,22 +22,19 @@ Département de sciences de la décision}
 % \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Modèles à effet aléatoire}
-\bi
-\item Le modèle mixte contient uniquement un effet aléatoire pour l'ordonnée à l'origine.
-\item L'équation du modèle de régression linéaire mixte est 
+\frametitle{Modèles avec ordonnée à l'origine aléatoire}
+ Le modèle de régression linéaire mixte suivant n'a qu'une seule composante aléatoire (une ordonnée à l'origine par groupe). L'équation de la moyenne est 
 \begin{align*}
 Y_{ij}=(\beta_0+b_i)+ \beta_1 \mathrm{X}_{ij1}+\cdots+\beta_p\mathrm{X}_{ijp} + \varepsilon_{ij}, \quad \bs{\varepsilon}_{i} \sim \mathsf{No}(\bs{0}, \mathbf{R}_i)
 \end{align*}
 pour $i=1,\ldots, m$ et $j=1, \ldots, n_i$ et où $Y_{ij}$ est l'observation $j$ du groupe $i$.
-\item L'\textbf{ordonnée à l'origine} du groupe $i$ est désormais $\beta_0+b_i$. Elle est composée
+L'\textbf{ordonnée à l'origine} du groupe $i$ est désormais $\beta_0+b_i$. Elle est composée
 \bi
 
 \item d'un effet fixe commun à tous les groupes, $\beta_0$;
 \item d'un effet aléatoire spécifique au groupe $i$, $b_i$.
 \ei
 
-\ei
 \end{frame}
 
 \begin{frame}[fragile]
