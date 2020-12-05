@@ -101,10 +101,14 @@ La variance de l'effet aléatoire sur l'ordonnée à l'origine est $\omega_{11}=
 \frametitle{Comparaison de modèles}
 \bi \item 
  On pourrait comparer avec le modèle qui inclut uniquement un effet aléatoire pour l'ordonnée à l'origine aléatoire
- \bi \item ce qui revient à tester $\Hy_0: \omega_{22} = \omega_{12}=0$.  
- \item La loi nulle asymptotique est  $\frac{1}{2} \chi^2_1 + \frac{1}{2} \chi^2_2$, 
- \item mais l'approximation est mauvaise en échantillon fini\ldots mieux vaut utiliser un critère d'information.
- \ei
+ \bi \item ce qui revient à tester $\Hy_0: \omega_{22}=0$, et la loi nulle de la statistique du rapport de vraisemblance est $\frac{1}{2} \chi^2_1$ si les effets aléatoires sont indépendants.
+\item si les erreurs sont corrélés, la variance nulle foce $\omega_{12}=0$ et on « perd » un autre paramètre\ldots
+ \item la loi nulle du test est compliquée, voir
+ \begin{quote} Andrews, D.W. (2001), \textsl{Testing when a parameter is on the boundary of the maintained hypothesis}, Econometrica, 69 (3)
+  \end{quote}
+  \ei
+\item L'approximation n'est pas très bonne \ldots la plupart des gens se rabattent sur les critères d'information.
+
  \ei
 \end{frame}
 
