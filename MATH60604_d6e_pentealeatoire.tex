@@ -58,8 +58,8 @@ Y_{ij}=(\beta_0 +\alert{b_{0i}}) + (\beta_1+\alert{b_{1i}})\mathrm{X}_{ij1}+\bet
 \begin{tcolorbox}[colback=white, colframe=hecblue, title=Code \SASlang{} pour ajuste un modèle avec pente aléatoire]
 \begin{verbatim}
 proc mixed data=modstat.vengeance;
-model vengeance = sexe age vc wom t 
-    / ddfm=kenwardroger solution;
+class id;
+model vengeance = sexe age vc wom t / solution;
 random intercept t / subject=id type=un v=1 vcorr=1;
 run;
 \end{verbatim}
