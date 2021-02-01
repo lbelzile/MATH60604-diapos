@@ -124,15 +124,25 @@ De manière équivalente, on peut écrire
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Structure d'équicorrélation du modèle avec ordonnée à l'origine aléatoire}
-\bi
-\item Nous voyons donc que l'introduction d'un effet aléatoire pour l'ordonnée à l'origine
-fait en sorte que les observations des individus d'un même groupe sont
-corrélées et que \alert{la corrélation est la même} peu importe les individus choisis (équicorrélation).
-\item Ainsi, \textbf{ajouter un effet aléatoire pour l'ordonnée à l'origine revient à utiliser une
-structure d'équicorrélation}.
-\ei 
+\frametitle{Structure d'équicorrélation avec ordonnée à l'origine aléatoire}
+Quand les aléas $\bs{\eps}_i$ sont indépendants et homoscédastiques, soit $\Va{\bs{\eps}_i}=\sigma^2\mathbf{I}_{n_i}$, introduire un effet aléatoire pour l'ordonnée à l'origine fait en sorte que la corrélation intra-groupe est constante.
+
+\vp\vp\vp\vp
+Dans ce cas précis, la matrice de covariance conditionnelle de  $\boldsymbol{Y}_i$ est donc la même que si
+on considérait une régression linéaire sans effet aléatoire avec une structure d'équicorrélation pour  $\Va{\bs{\eps}_i}$.
+
+
 \end{frame}
+% \begin{frame}[fragile]
+% \frametitle{Structure d'équicorrélation du modèle avec ordonnée à l'origine aléatoire}
+% \bi
+% \item Nous voyons donc que l'introduction d'un effet aléatoire pour l'ordonnée à l'origine
+% fait en sorte que les observations des individus d'un même groupe sont
+% corrélées et que \alert{la corrélation est la même} peu importe les individus choisis (équicorrélation).
+% \item Ainsi, \textbf{ajouter un effet aléatoire pour l'ordonnée à l'origine revient à utiliser une
+% structure d'équicorrélation}.
+% \ei 
+% \end{frame}
 \begin{frame}
 \frametitle{Équicorrélation}
 \bi 
