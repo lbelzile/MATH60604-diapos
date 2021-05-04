@@ -3,7 +3,7 @@
 \usepackage{icomma}
 
 \title[\color{white}{MATH 60604 \S~5c - Formulation du modèle}]{\texorpdfstring{MATH 60604 \\Modélisation statistique \\ \S~5c - Formulation du modèle}{MATH 60604 \\Modélisation statistique \\ \S~5c - Formulation du modèle}}
-\author{Léo Belzile}
+\author{}
 \institute{HEC Montréal\\
 Département de sciences de la décision}
 \date{} 
@@ -47,7 +47,7 @@ où les termes d'erreur $\epsilon$ sont supposés indépendants.
 
 \item  Nous allons utiliser \texttt{proc mixed} pour nous familiariser avec sa syntaxe.
  
-\begin{tcolorbox}[olback=white, colframe=hecblue, title=Code SAS pour ajuster un modèle linéaire]
+\begin{tcolorbox}[colback=white, colframe=hecblue, title=Code SAS pour ajuster un modèle linéaire]
 \begin{verbatim}
 proc mixed data=modstat.vengeance method=reml;
 model vengeance = sexe age vc wom t / solution;
@@ -63,7 +63,7 @@ run;
 \includegraphics[width = 0.45\linewidth]{img/c5/diapos6-e03}
 \includegraphics[width = 0.5\linewidth]{img/c5/diapos6-e04}
 \end{center}
-{\footnotesize La sortie de \code{proc mixed} est plus compliquée que celle de\code{proc glm}.
+{\footnotesize La sortie de \code{mixed} est plus compliquée que celle de \code{glm}.
 
 
 }

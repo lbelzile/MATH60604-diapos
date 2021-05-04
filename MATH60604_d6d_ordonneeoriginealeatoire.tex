@@ -4,7 +4,7 @@
 \usepackage{icomma}
 \usepackage{numprint}
 \title[\color{white}{MATH 60604 \S~6d - Ordonnée à l'origine aléatoire}]{\texorpdfstring{MATH 60604 \\Modélisation statistique \\ \S~6d - Ordonnée à l'origine aléatoire}{MATH 60604 \\Modélisation statistique \\ \S~6d - Ordonnée à l'origine aléatoire}}
-\author{Léo Belzile}
+\author{}
 \institute{HEC Montréal\\
 Département de sciences de la décision}
 \date{}
@@ -30,7 +30,6 @@ Y_{ij}=(\beta_0+b_i)+ \beta_1 \mathrm{X}_{ij1}+\cdots+\beta_p\mathrm{X}_{ijp} + 
 pour $i=1,\ldots, m$ et $j=1, \ldots, n_i$ et où $Y_{ij}$ est l'observation $j$ du groupe $i$.
 L'\textbf{ordonnée à l'origine} du groupe $i$ est désormais $\beta_0+b_i$. Elle est composée
 \bi
-
 \item d'un effet fixe commun à tous les groupes, $\beta_0$;
 \item d'un effet aléatoire spécifique au groupe $i$, $b_i$.
 \ei
@@ -58,7 +57,7 @@ Y_{ij}=(\beta_0+b_i)+ \beta_1 \mathrm{X}_{ij1}+\beta_2\mathrm{X}_{ij2}+\cdots+\b
 \bi
 \item Les effets aléatoires $b_1, \ldots, b_m$ sont supposées indépendants des termes d'aléas $\varepsilon$ et des variables explicatives
 \item On postule  pour le moment 
-\bi \item $b_{\i\phantom{j}}\simiid \mathsf{No}(0, \sigma^2_b)$ $(i=1, \ldots, m)$.
+\bi \item $b_{i\phantom{j}}\simiid \mathsf{No}(0, \sigma^2_b)$ $(i=1, \ldots, m)$.
 \item $\varepsilon_{ij}\simiid \mathsf{No}(0, \sigma^2)$ $(i=1, \ldots, m; j = 1, \ldots, n_i)$.
 \ei
 % \item Les aléas $\varepsilon_{ij}$ pourraient être corrélées au sein du groupe $i$, mais on postule qu'ils sont indépendants pour le moment.
@@ -125,13 +124,13 @@ De manière équivalente, on peut écrire
 
 \begin{frame}[fragile]
 \frametitle{Structure d'équicorrélation avec ordonnée à l'origine aléatoire}
-Quand les aléas $\bs{\eps}_i$ sont indépendants et homoscédastiques, soit $\Va{\bs{\eps}_i}=\sigma^2\mathbf{I}_{n_i}$, introduire un effet aléatoire pour l'ordonnée à l'origine fait en sorte que la corrélation intra-groupe est constante.
-
-\vp\vp\vp\vp
+\bi \item Quand les aléas $\bs{\eps}_i$ sont indépendants et homoscédastiques, soit $\Va{\bs{\eps}_i}=\sigma^2\mathbf{I}_{n_i}$, introduire un effet aléatoire pour l'ordonnée à l'origine fait en sorte que la corrélation intra-groupe est constante.
+\item 
 Dans ce cas précis, la matrice de covariance conditionnelle de  $\boldsymbol{Y}_i$ est donc la même que si
 on considérait une régression linéaire sans effet aléatoire avec une structure d'équicorrélation pour  $\Va{\bs{\eps}_i}$.
-
-
+\item 
+La différence ici est que la corrélation doit être non-négative. Ce n'est généralement pas une limitation, car les corrélations intra-groupe ont tendance à être positives.
+\ei
 \end{frame}
 % \begin{frame}[fragile]
 % \frametitle{Structure d'équicorrélation du modèle avec ordonnée à l'origine aléatoire}
@@ -143,16 +142,16 @@ on considérait une régression linéaire sans effet aléatoire avec une structu
 % structure d'équicorrélation}.
 % \ei 
 % \end{frame}
-\begin{frame}
-\frametitle{Équicorrélation}
-\bi 
-\item La différence ici est que la corrélation doit nécessairement être
-plus grande ou égale à zéro sachant que le $\sigma^2_b$ est une variance et donc forcément positive, alors que dans le  modèle d'équicorrélation, on a
-\[-\frac{1}{\max(n_i)+1} \leq \rho \leq 1.\]
-\item Ce n'est généralement pas une limitation, car les corrélations intra-groupe ont tendance à être positives.
-
-\ei
-\end{frame}
+% \begin{frame}
+% \frametitle{Équicorrélation}
+% \bi 
+% \item La différence ici est que la corrélation doit nécessairement être
+% plus grande ou égale à zéro sachant que le $\sigma^2_b$ est une variance et donc forcément positive, alors que dans le  modèle d'équicorrélation, on a
+% \[-\frac{1}{\max\{n_1, \ldots, n_m\}-1} \leq \rho \leq 1.\]
+% \item Ce n'est généralement pas une limitation, car les corrélations intra-groupe ont tendance à être positives.
+% 
+% \ei
+% \end{frame}
 
 
 \begin{frame}[fragile]
